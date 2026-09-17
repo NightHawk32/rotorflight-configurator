@@ -260,8 +260,47 @@ tab.initialize = function (callback) {
                 FC.BATTERY_CONFIG.vbatwarningcellvoltage = getFloatValue(this);
             });
 
-        if (semver.gte(FC.CONFIG.apiVersion, API_VERSION_12_9)) {
+        function selectBatteryProfile(index) {
+            if (self.currentBatteryProfile !== index) {
+                mspHelper.setBatteryProfile(index);
+                setDirty();
+            }
+        }
+
+        if (FC.BATTERY_CONFIG.hasProfileCells) {
             elementBatteryConfiguration.find('input[name="capacity"]').closest('.number').hide();
+            elementBatteryConfiguration.find('.profile-setting').hide();
+            $('.battery-capacities-fieldset').hide();
+
+            const profileContainer = $('.battery-profiles-fieldset').show().find('tbody').empty();
+            const rowTemplate = $('#tab-power-templates .battery-profile-row-template tr');
+
+            for (let i = 0; i < 6; i++) {
+                const row = rowTemplate.clone();
+
+                row.find('.name')
+                    .text(i18n.getMessage('powerBatteryProfile', i + 1));
+                row.on('click', () => selectBatteryProfile(i));
+
+                row.find('input').each(function () {
+                    const values = FC.BATTERY_CONFIG[this.dataset.field];
+                    const getValue = this.dataset.field.endsWith('voltages') ? getFloatValue : getIntegerValue;
+
+                    $(this)
+                        .val(values[i])
+                        .on('change', function () {
+                            values[i] = getValue(this);
+                        })
+                        .on('click', function (e) {
+                            e.stopPropagation();
+                        });
+                });
+
+                profileContainer.append(row);
+            }
+        } else if (semver.gte(FC.CONFIG.apiVersion, API_VERSION_12_9)) {
+            elementBatteryConfiguration.find('input[name="capacity"]').closest('.number').hide();
+            $('.battery-profiles-fieldset').hide();
 
             const fieldset = $('.battery-capacities-fieldset').show();
             const capacityContainer = fieldset.find('.battery-capacities').empty();
@@ -275,10 +314,7 @@ tab.initialize = function (callback) {
                     .text(i18n.getMessage('powerBatteryProfile', i + 1));
                 wrapper.on('click', function (e) {
                         e.preventDefault();
-                        if (self.currentBatteryProfile !== i) {
-                            mspHelper.setBatteryProfile(i);
-                            setDirty();
-                        }
+                        selectBatteryProfile(i);
                     });
 
                 input.attr('name', 'capacity_' + i)
@@ -294,6 +330,7 @@ tab.initialize = function (callback) {
             }
         } else {
             $('.battery-capacities-fieldset').hide();
+            $('.battery-profiles-fieldset').hide();
             elementBatteryConfiguration.find('input[name="capacity"]')
                 .val(FC.BATTERY_CONFIG.capacity)
                 .on('change', function () {
@@ -436,6 +473,10 @@ tab.initialize = function (callback) {
                             .removeClass('active-capacity')
                             .eq(activeProfile)
                             .addClass('active-capacity');
+                        $('.battery-profiles tbody tr')
+                            .removeClass('active-profile')
+                            .eq(activeProfile)
+                            .addClass('active-profile');
                     }
                 }
             });

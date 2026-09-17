@@ -139,12 +139,71 @@
     width: auto;
 }
 
+.tab-power fieldset.battery-profiles-fieldset {
+    border: 1px solid var(--subtleAccent);
+    border-radius: 3px;
+    padding: 0 5px 5px 5px;
+    margin-bottom: 5px;
+    clear: both;
+    min-width: 0;
+}
+
+.tab-power fieldset.battery-profiles-fieldset legend {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0 5px;
+    width: auto;
+}
+
+.tab-power table.battery-profiles {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tab-power table.battery-profiles th {
+    padding: 2px 4px;
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.tab-power table.battery-profiles td {
+    padding: 2px 4px;
+    border: none;
+}
+
+.tab-power table.battery-profiles tbody tr {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.tab-power table.battery-profiles tbody tr.active-profile {
+    background-color: var(--color-active-battery-capacity);
+}
+
+.tab-power table.battery-profiles .name {
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.tab-power table.battery-profiles input {
+    width: 55px;
+    padding-left: 3px;
+    height: 20px;
+    line-height: 20px;
+    border: 1px solid var(--subtleAccent);
+    border-radius: 3px;
+    font-size: 12px;
+}
+
 @media (hover: hover) {
-    .tab-power .battery-capacities .number:hover {
+    .tab-power .battery-capacities .number:hover,
+    .tab-power table.battery-profiles tbody tr:hover {
         background-color: var(--color-hover-battery-capacity);
     }
 
-    .tab-power .battery-capacities .number:active {
+    .tab-power .battery-capacities .number:active,
+    .tab-power table.battery-profiles tbody tr:active {
         background-color: var(--color-click-battery-capacity);
     }
 }
