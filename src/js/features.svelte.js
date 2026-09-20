@@ -1,3 +1,6 @@
+import semver from "semver";
+
+import { API_VERSION_12_10 } from "@/js/configurator.svelte.js";
 import { bit_check, bit_clear, bit_set } from "@/js/serial_backend.js";
 
 export class Features {
@@ -28,6 +31,25 @@ export class Features {
     OTHER: ["GPS", "LED_STRIP", "CMS"],
     RSSI: ["RSSI_ADC"],
   };
+
+  // Features the firmware stopped implementing as of the given API version.
+  // The bit stays in FLAGS so an existing bitfield still round-trips, but the
+  // feature is hidden when connected to firmware at or above that version.
+  static REMOVED_IN = {
+    CMS: API_VERSION_12_10,
+  };
+
+  static isSupported(featureName, apiVersion) {
+    const removedIn = Features.REMOVED_IN[featureName];
+    return !removedIn || semver.lt(apiVersion, removedIn);
+  }
+
+  // The features of a group that the connected firmware still implements.
+  static groupFeatures(groupName, apiVersion) {
+    return Features.GROUPS[groupName].filter((featureName) =>
+      Features.isSupported(featureName, apiVersion),
+    );
+  }
 
   bitfield = $state(0);
 

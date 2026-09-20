@@ -534,7 +534,12 @@ tab.initialize = function (callback) {
           for (const groupName of Object.keys(Features.GROUPS)) {
             if (!element.hasClass(groupName)) continue;
 
-            for (const featureName of Features.GROUPS[groupName]) {
+            const groupFeatures = Features.groupFeatures(
+              groupName,
+              FC.CONFIG.apiVersion
+            );
+
+            for (const featureName of groupFeatures) {
               let tipHtml = "";
               if (i18n.existsMessage(`featureTip_${featureName}`)) {
                 tipHtml = `<div class="helpicon cf_tip" i18n_title="featureTip_${featureName}"></div>`;
