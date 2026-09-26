@@ -25,3 +25,4 @@ import "./sensors.js";
 import "./servos.js";
 import "./setup.js";
 import "./status.js";
+import "./xact_servo.js";
