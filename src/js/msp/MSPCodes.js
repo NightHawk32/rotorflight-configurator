@@ -238,4 +238,11 @@ export const MSPCodes = {
     MSP2_SET_FBUS_MASTER_CONFIG:        0x5F0A,
     // 0x5F15: 0x5F0B-0x5F14 are taken upstream and by open PRs.
     MSP2_GET_FBUS_SENSORS_STATUS:       0x5F15,
+
+    // MicroLink / altitude hold / position hold / hard deck firmware
+    MSP2_POSITION_CONFIG:               0x5A00,
+    MSP2_SET_POSITION_CONFIG:           0x5A01,
+    MSP2_HOLD_PROFILE:                  0x5A02,
+    MSP2_SET_HOLD_PROFILE:              0x5A03,
+    MSP2_POSITION_STATUS:               0x5A04,
 };

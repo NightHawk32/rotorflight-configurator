@@ -52,7 +52,7 @@ export const LOG_RATES = {
   0: [1, 2, 4, 8, 16, 32, 64, 128, 256],
 };
 
-export function getDebugModes(apiVersion) {
+export function getDebugModes(apiVersion, positionSupported = false) {
   return [
     "NONE",
     "CYCLETIME",
@@ -134,10 +134,19 @@ export function getDebugModes(apiVersion) {
     "HS_OFFSET",
     "HS_BLEED",
     ...(semver.gte(apiVersion, API_VERSION_12_9) ? ["GOV_MOTOR"] : []),
-    "USER1",
-    "USER2",
-    "USER3",
-    "USER4",
+    // The MicroLink / hold firmware follows its debugType_e exactly
+    ...(positionSupported
+      ? [
+          "POLAR_RATE",
+          "GYRO_CALIBRATION",
+          "ALTHOLD",
+          "POSHOLD",
+          "HARDDECK",
+          "OPTICAL_FLOW",
+          "POS_EST_Z",
+          "POS_EST_XY",
+        ]
+      : ["USER1", "USER2", "USER3", "USER4"]),
   ];
 }
 
