@@ -17,7 +17,7 @@
   import { mspHelper } from "@/js/msp/MSPHelper.js";
   import { reinitialiseConnection } from "@/js/serial_backend.js";
 
-  const GPS_PROTOCOLS = ["NMEA", "UBLOX", "MSP", "FBUS"];
+  const GPS_PROTOCOLS = ["NMEA", "UBLOX", "MSP", "FBUS", "CRSF"];
   // The web build is served from a sub-directory, so resolve against the page.
   const MAP_URL =
     __BACKEND__ === "web"
@@ -104,9 +104,12 @@
   let fbusSelected = $derived(
     FC.GPS_CONFIG?.provider === GPS_PROTOCOLS.indexOf("FBUS"),
   );
-  // FBUS receives GPS as pushed sensor telemetry instead of driving a GPS
-  // receiver over a serial port of its own.
-  let pushedDataSelected = $derived(fbusSelected);
+  // FBUS and CRSF receive GPS as pushed sensor telemetry (FBUS master /
+  // CRSF sensors driver) instead of driving a GPS receiver over a serial
+  // port of their own.
+  let pushedDataSelected = $derived(
+    fbusSelected || FC.GPS_CONFIG?.provider === GPS_PROTOCOLS.indexOf("CRSF"),
+  );
   let fbusSatelliteCountUnknown = $derived(
     fbusSelected && FC.GPS_DATA?.fix && FC.GPS_DATA?.numSat === 0,
   );

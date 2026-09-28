@@ -623,7 +623,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
             }
 
             case MSPCodes.MSP2_POSITION_CONFIG: {
-                if (data.readU8() !== 1) {
+                if (data.readU8() !== 2) {
                     console.log('Unknown position config payload version');
                     break;
                 }
@@ -646,6 +646,8 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 cfg.est_r_flow_vel = data.readU16();
                 cfg.est_r_gps_vvel = data.readU16();
                 cfg.baro_downwash_comp = data.readU8();
+                cfg.est_q_terrain = data.readU16();
+                cfg.flow_gyro_comp = data.read16();
                 cfg.rangefinder_hardware = data.readU8();
                 cfg.optical_flow_hardware = data.readU8();
                 cfg.supported = true;
@@ -692,7 +694,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
             }
 
             case MSPCodes.MSP2_POSITION_STATUS: {
-                if (data.readU8() !== 1) {
+                if (data.readU8() !== 2) {
                     break;
                 }
                 const st = FC.POSITION_STATUS;
@@ -733,6 +735,8 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 st.harddeckState = data.readU8();
                 st.harddeckPredicted = data.read32();
                 st.harddeckTarget = data.read32();
+                st.terrain = data.read32();
+                st.terrainSigma = data.readU16();
                 break;
             }
 
@@ -2427,7 +2431,7 @@ MspHelper.prototype.crunch = function(code) {
 
         case MSPCodes.MSP2_SET_POSITION_CONFIG: {
             const cfg = FC.POSITION_CONFIG;
-            buffer.push8(1) // payload version
+            buffer.push8(2) // payload version
                   .push8(cfg.alt_source)
                   .push8(cfg.xy_source)
                   .push8(cfg.baro_alt_lpf)
@@ -2446,6 +2450,8 @@ MspHelper.prototype.crunch = function(code) {
                   .push16(cfg.est_r_flow_vel)
                   .push16(cfg.est_r_gps_vvel)
                   .push8(cfg.baro_downwash_comp)
+                  .push16(cfg.est_q_terrain)
+                  .push16(cfg.flow_gyro_comp)
                   .push8(cfg.rangefinder_hardware)
                   .push8(cfg.optical_flow_hardware);
             break;
