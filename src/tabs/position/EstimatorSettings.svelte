@@ -29,7 +29,8 @@
     ["est_q_accel_z", "positionQAccelZ", 100, 20000, "(cm/s²)²"],
     ["est_q_accel_xy", "positionQAccelXY", 100, 50000, "(cm/s²)²"],
     ["est_q_baro_bias", "positionQBaroBias", 0, 400, "cm²/s"],
-    ["est_r_baro_alt", "positionRBaro", 1, 1500, "cm²"],
+    ["est_q_terrain", "positionQTerrain", 0, 200, "cm²/m"],
+    ["est_r_baro_alt", "positionRBaro", 1, 600, "cm²"],
     ["est_r_lidar_alt", "positionRLidar", 1, 100, "cm²"],
     ["est_r_gps_pos", "positionRGpsPos", 1, 500, "cm²"],
     ["est_r_gps_vel", "positionRGpsVel", 1, 100, "(cm/s)²"],
@@ -117,6 +118,17 @@
       def={12}
       label="positionGpsMinSats"
       help="positionGpsMinSatsHelp"
+    />
+    <ScaledField
+      id="flow-gyro-comp"
+      obj={cfg}
+      key="flow_gyro_comp"
+      min={-200}
+      max={200}
+      def={100}
+      unit="%"
+      label="positionFlowGyroComp"
+      help="positionFlowGyroCompHelp"
     />
   </SubSection>
   <Expert>

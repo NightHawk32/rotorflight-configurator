@@ -106,5 +106,9 @@
       label="positionLidarMeasurement"
       value={has(st.flags, POS.AGL_VALID) ? meters(st.rfMeas) : "—"}
     />
+    <Readout
+      label="positionTerrainOffset"
+      value={`${meters(st.terrain)} ± ${meters(st.terrainSigma)}`}
+    />
   </SubSection>
 </Section>
