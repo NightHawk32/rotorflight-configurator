@@ -8234,6 +8234,9 @@
     "positionLidarMeasurement": {
         "message": "LIDAR (aligned)"
     },
+    "positionTerrainOffset": {
+        "message": "Terrain offset"
+    },
     "positionLiveHorizontal": {
         "message": "Live: horizontal estimate"
     },
@@ -8562,19 +8565,31 @@
         "message": "R GPS position"
     },
     "positionRGpsPosHelp": {
-        "message": "GPS position noise at HDOP 1. CLI: position_est_r_gps_pos."
+        "message": "GPS position noise. With u-blox the receiver's accuracy estimate is used and this is only a floor; with NMEA it is scaled by HDOP². CLI: position_est_r_gps_pos."
     },
     "positionRGpsVel": {
         "message": "R GPS velocity"
     },
     "positionRGpsVelHelp": {
-        "message": "GPS velocity noise at HDOP 1. CLI: position_est_r_gps_vel."
+        "message": "GPS velocity noise. With u-blox the receiver's speed accuracy is used and this is only a floor; with NMEA it is scaled by HDOP². CLI: position_est_r_gps_vel."
     },
     "positionRGpsVvel": {
         "message": "R GPS vertical velocity"
     },
     "positionRGpsVvelHelp": {
-        "message": "GPS Doppler vertical velocity noise (u-blox only). CLI: position_est_r_gps_vvel."
+        "message": "GPS Doppler vertical velocity noise (u-blox only). With u-blox the receiver's own accuracy estimate is used and this is only a floor. CLI: position_est_r_gps_vvel."
+    },
+    "positionQTerrain": {
+        "message": "Q terrain offset"
+    },
+    "positionQTerrainHelp": {
+        "message": "How fast the ground height under the model may change per metre flown. 0 freezes the terrain state (the LIDAR then acts as an absolute altitude). CLI: position_est_q_terrain."
+    },
+    "positionFlowGyroComp": {
+        "message": "Flow body-rate compensation"
+    },
+    "positionFlowGyroCompHelp": {
+        "message": "Removes the apparent ground motion the optical flow sees while the model pitches or rolls. 100 = physically exact, 0 = off, negative for a module whose axes are mirrored. Check: with props off and armed, pitching or rolling in place must leave the flow velocity near zero. CLI: position_flow_gyro_comp."
     },
     "positionRFlowVel": {
         "message": "R flow velocity"

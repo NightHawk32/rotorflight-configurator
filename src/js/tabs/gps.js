@@ -54,6 +54,7 @@ tab.initialize = function (callback) {
             'UBLOX',
             'MSP',
             'FBUS',
+            'CRSF',
         ];
 
         const gpsBaudRates = [
@@ -88,7 +89,10 @@ tab.initialize = function (callback) {
         const gpsSignalPanel = $('.gps_signal_panel').closest('.grid-col');
 
         function refreshGpsProviderUi() {
-            const fbusSelected = (FC.GPS_CONFIG.provider === gpsProtocols.indexOf('FBUS'));
+            // FBUS and CRSF GPS have no serial port of their own: the data
+            // comes from the FBUS master / CRSF sensors driver
+            const fbusSelected = (FC.GPS_CONFIG.provider === gpsProtocols.indexOf('FBUS')) ||
+                                 (FC.GPS_CONFIG.provider === gpsProtocols.indexOf('CRSF'));
             const ubloxSelected = (FC.GPS_CONFIG.provider === gpsProtocols.indexOf('UBLOX'));
             const autoConfigEnabled = !fbusSelected && gpsAutoConfigElement.is(':checked');
 

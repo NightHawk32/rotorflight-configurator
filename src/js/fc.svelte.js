@@ -188,6 +188,8 @@ class FlightController {
       est_r_flow_vel:             0,
       est_r_gps_vvel:             0,
       baro_downwash_comp:         0,
+      est_q_terrain:              0,
+      flow_gyro_comp:             0,
       rangefinder_hardware:       0,
       optical_flow_hardware:      0,
     };
@@ -255,6 +257,8 @@ class FlightController {
       harddeckState:              0,
       harddeckPredicted:          0,
       harddeckTarget:             0,
+      terrain:                    0,
+      terrainSigma:               0,
     };
 
     this.ANALOG = {
