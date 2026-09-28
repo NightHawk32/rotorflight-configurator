@@ -47,6 +47,13 @@ const NWJS_ARCH = {
 };
 const NWJS_VERSION_MANIFEST = "https://nwjs.io/versions.json";
 
+// Dev client: the Vite dev server port (vite.config.mjs reads the same
+// variable), and where a generated NW.js manifest goes when package.json's
+// own one cannot be used as is
+const DEV_DEFAULT_PORT = 5077;
+const DEV_PORT = Number(process.env.RF_DEV_PORT) || DEV_DEFAULT_PORT;
+const DEV_MANIFEST_DIR = ".nwjs-dev";
+
 const context = {};
 parseArgs();
 
@@ -512,8 +519,9 @@ function getNwjsExePath(platform) {
   }
 }
 
-function run_nwjs_dev_client() {
+async function run_nwjs_dev_client() {
   const { platform, arch } = context.target;
+  const srcDir = await prepare_nwjs_dev_manifest();
 
   return runAsync(
     nwbuild({
@@ -524,10 +532,53 @@ function run_nwjs_dev_client() {
       version: NWJS_VERSION,
       cacheDir: NWJS_CACHE_DIR,
       glob: false,
-      srcDir: ".",
+      srcDir,
       manifestUrl: NWJS_VERSION_MANIFEST,
     }),
   );
+}
+
+// package.json is the dev client's NW.js manifest. It is used directly
+// unless:
+//  - RF_DEV_PORT selects another dev server port (e.g. to run next to a
+//    second configurator checkout): its "main" URL has the default port;
+//  - public/images is not a directory (Windows checkout without symlinks):
+//    its window icon would point at a placeholder file.
+// Then a copy with those two fixed is written to DEV_MANIFEST_DIR. The app
+// itself is loaded from the dev server either way.
+async function prepare_nwjs_dev_manifest() {
+  const iconOk = await fs
+    .stat("public/images")
+    .then((st) => st.isDirectory())
+    .catch(() => false);
+
+  if (DEV_PORT === DEV_DEFAULT_PORT && iconOk) {
+    return ".";
+  }
+
+  // Fresh copy: the module-level pkg has been rewritten for release builds
+  const manifest = JSON.parse(await fs.readFile("package.json", "utf-8"));
+  manifest.main = `http://localhost:${DEV_PORT}/`;
+  // NW.js loads the icon as an extension icon, which must lie inside the
+  // app directory: copy it next to the manifest
+  manifest.window.icon = "rf_icon.png";
+  if (DEV_PORT !== DEV_DEFAULT_PORT) {
+    // Separate profile and instance, so it can run next to the default one
+    manifest.name = `${manifest.name}-dev-${DEV_PORT}`;
+    manifest["single-instance"] = false;
+  }
+
+  await fs.mkdir(DEV_MANIFEST_DIR, { recursive: true });
+  await fs.copyFile(
+    "src/images/rf_icon.png",
+    path.join(DEV_MANIFEST_DIR, "rf_icon.png"),
+  );
+  await fs.writeFile(
+    path.join(DEV_MANIFEST_DIR, "package.json"),
+    JSON.stringify(manifest, null, 2),
+  );
+  logger.info(`NW.js dev client: ${manifest.main} (${DEV_MANIFEST_DIR})`);
+  return DEV_MANIFEST_DIR;
 }
 
 function run_debug_cordova() {

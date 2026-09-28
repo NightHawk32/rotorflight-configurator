@@ -19,6 +19,7 @@ app/
 bundle/
 redist/
 nwjs_cache
+.nwjs-dev/
 
 # OSX
 .DS_store

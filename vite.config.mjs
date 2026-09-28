@@ -5,6 +5,11 @@ import { svelte } from "@sveltejs/vite-plugin-svelte";
 import { defineConfig } from "vite";
 
 import pkg from "./package.json" with { type: "json" };
+import { linkedDirs } from "./vite-plugin-linked-dirs.mjs";
+
+// RF_DEV_PORT: run the dev server (and the NW.js dev client, see
+// gulpfile.mjs) on another port, e.g. next to a second checkout
+const devPort = Number(process.env.RF_DEV_PORT) || 5077;
 
 const commitHash = child_process
   .execSync("git rev-parse --short HEAD")
@@ -41,13 +46,19 @@ export default defineConfig({
   },
   plugins: [
     svelte(),
+    linkedDirs(),
     {
       name: "locale-watch",
       configureServer(server) {
         server.watcher.on("change", (file) => {
-          const relative = path.relative(server.config.root, file);
+          // Forward slashes on every platform; locales/ is watched directly
+          // when public/locales is not a working symlink (Windows)
+          const relative = path
+            .relative(server.config.root, file)
+            .split(path.sep)
+            .join("/");
           const match = relative.match(
-            /^public\/locales\/(.+)\/messages.json$/,
+            /^(?:public\/)?locales\/(.+)\/messages.json$/,
           );
           if (match) {
             server.ws.send("locale-change", match[1]);
@@ -75,7 +86,17 @@ export default defineConfig({
     __COMMIT_HASH__: JSON.stringify(commitHash),
   },
   server: {
-    port: 5077,
+    port: devPort,
     strictPort: true,
+    watch: {
+      // NW.js downloads/unpacks and build output: no reloads for those
+      ignored: [
+        "**/nwjs_cache/**",
+        "**/.nwjs-dev/**",
+        "**/app/**",
+        "**/bundle/**",
+        "**/redist/**",
+      ],
+    },
   },
 });
