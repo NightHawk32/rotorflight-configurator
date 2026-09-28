@@ -20,11 +20,7 @@ init: ## Install development dependencies
 
 .PHONY: fontawesome
 fontawesome:
-	rm -fr public/fontawesome
-	mkdir -p public/fontawesome/css
-	mkdir -p public/fontawesome/webfonts
-	cp ./node_modules/@fortawesome/fontawesome-free/css/all.min.css public/fontawesome/css/all.min.css
-	cp ./node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid* public/fontawesome/webfonts
+	node tools/setup-fontawesome.mjs
 
 .PHONY: version
 version: ## Set application version to $SEMVER
