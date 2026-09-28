@@ -31,6 +31,7 @@ class FlightController {
   GPS_CONFIG = $state();
   GPS_DATA = $state();
   GPS_RESCUE = $state();
+  HOLD_PROFILE = $state();
   LED_COLORS = $state();
   LED_MODE_COLORS = $state();
   LED_STRIP = $state();
@@ -53,6 +54,8 @@ class FlightController {
   PID_NAMES = $state();
   PID_PROFILE = $state();
   PILOT_CONFIG = $state();
+  POSITION_CONFIG = $state();
+  POSITION_STATUS = $state();
   RC = $state();
   RC_COMMAND = $state();
   RC_CONFIG = $state();
@@ -161,6 +164,97 @@ class FlightController {
       voltageDropRate:            0,
       chargeDropRate:             0,
       sagGain:                    0,
+    };
+
+    // MSP2_POSITION_CONFIG: estimator and sensor hardware (master settings).
+    // 'supported' is set when the firmware answers the message.
+    this.POSITION_CONFIG = {
+      supported:                  false,
+      alt_source:                 0,
+      xy_source:                  0,
+      baro_alt_lpf:               0,
+      baro_offset_lpf:            0,
+      gps_alt_lpf:                0,
+      gps_offset_lpf:             0,
+      gps_min_sats:               0,
+      vario_lpf:                  0,
+      est_q_accel_xy:             0,
+      est_q_accel_z:              0,
+      est_q_baro_bias:            0,
+      est_r_baro_alt:             0,
+      est_r_lidar_alt:            0,
+      est_r_gps_pos:              0,
+      est_r_gps_vel:              0,
+      est_r_flow_vel:             0,
+      est_r_gps_vvel:             0,
+      baro_downwash_comp:         0,
+      rangefinder_hardware:       0,
+      optical_flow_hardware:      0,
+    };
+
+    // MSP2_HOLD_PROFILE: per PID profile, keys match the CLI names
+    this.HOLD_PROFILE = {
+      althold_alt_p_gain:         0,
+      althold_alt_i_gain:         0,
+      althold_alt_d_gain:         0,
+      althold_max_climb_rate:     0,
+      althold_stick_deadband:     0,
+      althold_hover_collective:   0,
+      poshold_pos_p_gain:         0,
+      poshold_vel_p_gain:         0,
+      poshold_vel_i_gain:         0,
+      poshold_max_horiz_speed:    0,
+      poshold_max_tilt_angle:     0,
+      poshold_stick_deadband:     0,
+      harddeck_altitude:          0,
+      harddeck_arm_margin:        0,
+      harddeck_recovery_margin:   0,
+      harddeck_release_altitude:  0,
+      harddeck_recovery_accel:    0,
+      harddeck_reaction_time:     0,
+      harddeck_sigma_factor:      0,
+      harddeck_use_agl:           0,
+    };
+
+    // MSP2_POSITION_STATUS: live estimator / controller snapshot (cm, cm/s)
+    this.POSITION_STATUS = {
+      flags:                      0,
+      altitude:                   0,
+      kfAlt:                      0,
+      kfVario:                    0,
+      kfSigma:                    0,
+      baroBias:                   0,
+      disturbance:                0,
+      baroMeas:                   0,
+      gpsMeas:                    0,
+      rfMeas:                     0,
+      aglAlt:                     0,
+      aglVario:                   0,
+      aglReliability:             0,
+      rangefinderRaw:             0,
+      flowX:                      0,
+      flowY:                      0,
+      flowQuality:                0,
+      flowStatus:                 0,
+      posEast:                    0,
+      posNorth:                   0,
+      velEast:                    0,
+      velNorth:                   0,
+      posSigma:                   0,
+      flowVelEast:                0,
+      flowVelNorth:               0,
+      altholdFlags:               0,
+      altholdTarget:              0,
+      altholdAlt:                 0,
+      altholdOutput:              0,
+      posholdActive:              false,
+      posholdTargetEast:          0,
+      posholdTargetNorth:         0,
+      posholdRoll:                0,
+      posholdPitch:               0,
+      harddeckState:              0,
+      harddeckPredicted:          0,
+      harddeckTarget:             0,
     };
 
     this.ANALOG = {

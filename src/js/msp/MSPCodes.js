@@ -216,4 +216,11 @@ export const MSPCodes = {
 //  MSP2_GET_VTX_DEVICE_STATUS:         0x3004,
     MSP2_SMARTFUEL_CONFIG:              0x4000,
     MSP2_SET_SMARTFUEL_CONFIG:          0x4001,
+
+    // MicroLink / altitude hold / position hold / hard deck firmware
+    MSP2_POSITION_CONFIG:               0x5A00,
+    MSP2_SET_POSITION_CONFIG:           0x5A01,
+    MSP2_HOLD_PROFILE:                  0x5A02,
+    MSP2_SET_HOLD_PROFILE:              0x5A03,
+    MSP2_POSITION_STATUS:               0x5A04,
 };

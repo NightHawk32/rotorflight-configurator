@@ -113,10 +113,22 @@ const tab = {
             "HS_OFFSET",
             "HS_BLEED",
             ...(semver.gte(FC.CONFIG.apiVersion, API_VERSION_12_9) ? ["GOV_MOTOR"] : []),
-            "USER1",
-            "USER2",
-            "USER3",
-            "USER4",
+            // The MicroLink / hold firmware follows its debugType_e exactly
+            ...(FC.POSITION_CONFIG.supported ? [
+                "POLAR_RATE",
+                "GYRO_CALIBRATION",
+                "ALTHOLD",
+                "POSHOLD",
+                "HARDDECK",
+                "OPTICAL_FLOW",
+                "POS_EST_Z",
+                "POS_EST_XY",
+            ] : [
+                "USER1",
+                "USER2",
+                "USER3",
+                "USER4",
+            ]),
         ];
     },
 

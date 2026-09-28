@@ -68,6 +68,8 @@ export function MspHelper() {
         'SBUS_OUT': 18,
         'FBUS_OUT': 19,
         'SPORT_MASTER': 20,
+        'SRXL2_ESC': 21,
+        'MICROLINK': 22,
     };
 
     self.REBOOT_TYPES = {
@@ -376,6 +378,120 @@ MspHelper.prototype.process_data = function(dataHandler) {
 
             case MSPCodes.MSP2_SET_SMARTFUEL_CONFIG: {
                 console.log('Smart Fuel configuration saved');
+                break;
+            }
+
+            case MSPCodes.MSP2_POSITION_CONFIG: {
+                if (data.readU8() !== 1) {
+                    console.log('Unknown position config payload version');
+                    break;
+                }
+                const cfg = FC.POSITION_CONFIG;
+                cfg.alt_source = data.readU8();
+                cfg.xy_source = data.readU8();
+                cfg.baro_alt_lpf = data.readU8();
+                cfg.baro_offset_lpf = data.readU8();
+                cfg.gps_alt_lpf = data.readU8();
+                cfg.gps_offset_lpf = data.readU8();
+                cfg.gps_min_sats = data.readU8();
+                cfg.vario_lpf = data.readU8();
+                cfg.est_q_accel_xy = data.readU16();
+                cfg.est_q_accel_z = data.readU16();
+                cfg.est_q_baro_bias = data.readU16();
+                cfg.est_r_baro_alt = data.readU16();
+                cfg.est_r_lidar_alt = data.readU16();
+                cfg.est_r_gps_pos = data.readU16();
+                cfg.est_r_gps_vel = data.readU16();
+                cfg.est_r_flow_vel = data.readU16();
+                cfg.est_r_gps_vvel = data.readU16();
+                cfg.baro_downwash_comp = data.readU8();
+                cfg.rangefinder_hardware = data.readU8();
+                cfg.optical_flow_hardware = data.readU8();
+                cfg.supported = true;
+                break;
+            }
+
+            case MSPCodes.MSP2_SET_POSITION_CONFIG: {
+                console.log('Position configuration saved');
+                break;
+            }
+
+            case MSPCodes.MSP2_HOLD_PROFILE: {
+                if (data.readU8() !== 1) {
+                    console.log('Unknown hold profile payload version');
+                    break;
+                }
+                const hp = FC.HOLD_PROFILE;
+                hp.althold_alt_p_gain = data.readU16();
+                hp.althold_alt_i_gain = data.readU16();
+                hp.althold_alt_d_gain = data.readU16();
+                hp.althold_max_climb_rate = data.readU16();
+                hp.althold_stick_deadband = data.readU16();
+                hp.althold_hover_collective = data.readU16();
+                hp.poshold_pos_p_gain = data.readU16();
+                hp.poshold_vel_p_gain = data.readU16();
+                hp.poshold_vel_i_gain = data.readU16();
+                hp.poshold_max_horiz_speed = data.readU16();
+                hp.poshold_max_tilt_angle = data.readU16();
+                hp.poshold_stick_deadband = data.readU16();
+                hp.harddeck_altitude = data.readU16();
+                hp.harddeck_arm_margin = data.readU16();
+                hp.harddeck_recovery_margin = data.readU16();
+                hp.harddeck_release_altitude = data.readU16();
+                hp.harddeck_recovery_accel = data.readU16();
+                hp.harddeck_reaction_time = data.readU16();
+                hp.harddeck_sigma_factor = data.readU8();
+                hp.harddeck_use_agl = data.readU8();
+                break;
+            }
+
+            case MSPCodes.MSP2_SET_HOLD_PROFILE: {
+                console.log('Hold profile saved');
+                break;
+            }
+
+            case MSPCodes.MSP2_POSITION_STATUS: {
+                if (data.readU8() !== 1) {
+                    break;
+                }
+                const st = FC.POSITION_STATUS;
+                st.flags = data.readU16();
+                st.altitude = data.read32();
+                st.kfAlt = data.read32();
+                st.kfVario = data.read16();
+                st.kfSigma = data.readU16();
+                st.baroBias = data.read16();
+                st.disturbance = data.readU16() / 100;
+                st.baroMeas = data.read32();
+                st.gpsMeas = data.read32();
+                st.rfMeas = data.read32();
+                st.aglAlt = data.read32();
+                st.aglVario = data.read16();
+                st.aglReliability = data.readU16() / 1000;
+                st.rangefinderRaw = data.read32();
+                st.flowX = data.read16();
+                st.flowY = data.read16();
+                st.flowQuality = data.readU8();
+                st.flowStatus = data.readU8();
+                st.posEast = data.read32();
+                st.posNorth = data.read32();
+                st.velEast = data.read16();
+                st.velNorth = data.read16();
+                st.posSigma = data.readU16();
+                st.flowVelEast = data.read16();
+                st.flowVelNorth = data.read16();
+                st.altholdFlags = data.readU8();
+                st.altholdTarget = data.read32();
+                st.altholdAlt = data.read32();
+                st.altholdOutput = data.read16();
+                st.posholdActive = data.readU8() !== 0;
+                st.posholdTargetEast = data.read32();
+                st.posholdTargetNorth = data.read32();
+                st.posholdRoll = data.read16();
+                st.posholdPitch = data.read16();
+                st.harddeckState = data.readU8();
+                st.harddeckPredicted = data.read32();
+                st.harddeckTarget = data.read32();
                 break;
             }
 
@@ -2022,6 +2138,58 @@ MspHelper.prototype.crunch = function(code) {
                   .push8(FC.SMARTFUEL_CONFIG.voltageDropRate)
                   .push8(FC.SMARTFUEL_CONFIG.chargeDropRate)
                   .push8(FC.SMARTFUEL_CONFIG.sagGain);
+            break;
+        }
+
+        case MSPCodes.MSP2_SET_POSITION_CONFIG: {
+            const cfg = FC.POSITION_CONFIG;
+            buffer.push8(1) // payload version
+                  .push8(cfg.alt_source)
+                  .push8(cfg.xy_source)
+                  .push8(cfg.baro_alt_lpf)
+                  .push8(cfg.baro_offset_lpf)
+                  .push8(cfg.gps_alt_lpf)
+                  .push8(cfg.gps_offset_lpf)
+                  .push8(cfg.gps_min_sats)
+                  .push8(cfg.vario_lpf)
+                  .push16(cfg.est_q_accel_xy)
+                  .push16(cfg.est_q_accel_z)
+                  .push16(cfg.est_q_baro_bias)
+                  .push16(cfg.est_r_baro_alt)
+                  .push16(cfg.est_r_lidar_alt)
+                  .push16(cfg.est_r_gps_pos)
+                  .push16(cfg.est_r_gps_vel)
+                  .push16(cfg.est_r_flow_vel)
+                  .push16(cfg.est_r_gps_vvel)
+                  .push8(cfg.baro_downwash_comp)
+                  .push8(cfg.rangefinder_hardware)
+                  .push8(cfg.optical_flow_hardware);
+            break;
+        }
+
+        case MSPCodes.MSP2_SET_HOLD_PROFILE: {
+            const hp = FC.HOLD_PROFILE;
+            buffer.push8(1) // payload version
+                  .push16(hp.althold_alt_p_gain)
+                  .push16(hp.althold_alt_i_gain)
+                  .push16(hp.althold_alt_d_gain)
+                  .push16(hp.althold_max_climb_rate)
+                  .push16(hp.althold_stick_deadband)
+                  .push16(hp.althold_hover_collective)
+                  .push16(hp.poshold_pos_p_gain)
+                  .push16(hp.poshold_vel_p_gain)
+                  .push16(hp.poshold_vel_i_gain)
+                  .push16(hp.poshold_max_horiz_speed)
+                  .push16(hp.poshold_max_tilt_angle)
+                  .push16(hp.poshold_stick_deadband)
+                  .push16(hp.harddeck_altitude)
+                  .push16(hp.harddeck_arm_margin)
+                  .push16(hp.harddeck_recovery_margin)
+                  .push16(hp.harddeck_release_altitude)
+                  .push16(hp.harddeck_recovery_accel)
+                  .push16(hp.harddeck_reaction_time)
+                  .push8(hp.harddeck_sigma_factor)
+                  .push8(hp.harddeck_use_agl);
             break;
         }
 

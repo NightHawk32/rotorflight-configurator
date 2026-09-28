@@ -547,6 +547,13 @@ async function onConnect() {
         await MSP.promise(MSPCodes.MSP_STATUS, false);
         await MSP.promise(MSPCodes.MSP_DATAFLASH_SUMMARY, false);
 
+        // Firmware with altitude/position hold answers this; others reply
+        // "unsupported" and POSITION_CONFIG.supported stays false
+        if (!CONFIGURATOR.virtualMode) {
+            await MSP.promise(MSPCodes.MSP2_POSITION_CONFIG, false);
+        }
+        $('#tabs ul.mode-connected li.tab_position').toggle(FC.POSITION_CONFIG.supported);
+
         if (FC.CONFIG.boardType == 0 || FC.CONFIG.boardType == 2) {
             startLiveDataRefreshTimer();
         }

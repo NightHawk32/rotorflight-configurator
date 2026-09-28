@@ -8047,5 +8047,557 @@
     },
     "presetsDontShowAgain": {
         "message": "Don't show again"
+    },
+    "tabPosition": {
+        "message": "Position & Hold"
+    },
+    "portsFunction_MICROLINK": {
+        "message": "MicroLink (LIDAR + flow)"
+    },
+    "positionYes": {
+        "message": "Yes"
+    },
+    "positionNo": {
+        "message": "No"
+    },
+    "positionUnknown": {
+        "message": "Unknown"
+    },
+    "positionHealthy": {
+        "message": "Healthy"
+    },
+    "positionNoData": {
+        "message": "No data"
+    },
+    "positionOutOfRange": {
+        "message": "Out of range"
+    },
+    "positionEngaged": {
+        "message": "Engaged"
+    },
+    "positionOff": {
+        "message": "Off"
+    },
+    "positionState": {
+        "message": "State"
+    },
+    "positionTarget": {
+        "message": "Target"
+    },
+    "positionCurrent": {
+        "message": "Current"
+    },
+    "positionError": {
+        "message": "Error"
+    },
+    "positionEstimate": {
+        "message": "Estimate"
+    },
+    "positionEstimateValid": {
+        "message": "Estimate valid"
+    },
+    "positionForward": {
+        "message": "Forward"
+    },
+    "positionRight": {
+        "message": "Right"
+    },
+    "positionPidProfile": {
+        "message": "Applies to PID profile {{profile}}"
+    },
+    "positionLiveSensors": {
+        "message": "Live: sensors"
+    },
+    "positionLiveSensorsHelp": {
+        "message": "Rangefinder and optical flow as the flight controller sees them. These update while disarmed, so you can check wiring and direction on the bench."
+    },
+    "positionRangefinder": {
+        "message": "Rangefinder"
+    },
+    "positionDetected": {
+        "message": "Detected"
+    },
+    "positionRangefinderRaw": {
+        "message": "Raw distance"
+    },
+    "positionAglAltitude": {
+        "message": "Height above ground"
+    },
+    "positionAglVario": {
+        "message": "Height rate"
+    },
+    "positionAglValid": {
+        "message": "Height valid"
+    },
+    "positionAglReliability": {
+        "message": "Reliability"
+    },
+    "positionOpticalFlow": {
+        "message": "Optical flow"
+    },
+    "positionFlowQuality": {
+        "message": "Flow quality"
+    },
+    "positionFlowRawX": {
+        "message": "Raw flow X (forward)"
+    },
+    "positionFlowRawY": {
+        "message": "Raw flow Y (left)"
+    },
+    "positionFlowStatus": {
+        "message": "Last sample"
+    },
+    "positionFlowStatusFused": {
+        "message": "Used"
+    },
+    "positionFlowStatusDisabled": {
+        "message": "Not used (XY source is GPS only)"
+    },
+    "positionFlowStatusNoSensor": {
+        "message": "No sensor / no data"
+    },
+    "positionFlowStatusNoAgl": {
+        "message": "Not used: no valid height"
+    },
+    "positionFlowStatusLowQuality": {
+        "message": "Not used: quality too low"
+    },
+    "positionFlowStatusTilt": {
+        "message": "Not used: tilted more than 45°"
+    },
+    "positionFlowDirection": {
+        "message": "Flow direction check"
+    },
+    "positionFlowDirectionHelp": {
+        "message": "Hold the model level over a textured floor. Slide it forward: the arrow must point up. Slide it right: the arrow must point right. If not, the sensor is mounted rotated or mirrored."
+    },
+    "positionLiveAltitude": {
+        "message": "Live: altitude estimate"
+    },
+    "positionLiveAltitudeHelp": {
+        "message": "The fused altitude (Kalman filter) against each sensor as the filter sees it, over the last 30 s. Altitudes are relative to the arm point; before arming, relative to power-up. Baro is shown with the estimated downwash bias removed."
+    },
+    "positionSeriesFused": {
+        "message": "Fused"
+    },
+    "positionSeriesBaro": {
+        "message": "Baro − bias"
+    },
+    "positionSeriesGps": {
+        "message": "GPS"
+    },
+    "positionSeriesLidar": {
+        "message": "LIDAR"
+    },
+    "positionSeriesTarget": {
+        "message": "Alt hold target"
+    },
+    "positionFusedAltitude": {
+        "message": "Fused altitude"
+    },
+    "positionFusedVario": {
+        "message": "Fused climb rate"
+    },
+    "positionAltitudeSigma": {
+        "message": "Uncertainty (1σ)"
+    },
+    "positionDisplayedAltitude": {
+        "message": "Altitude shown in OSD/telemetry"
+    },
+    "positionBaroModel": {
+        "message": "Baro downwash model"
+    },
+    "positionBaroBias": {
+        "message": "Baro bias"
+    },
+    "positionDisturbance": {
+        "message": "Rotor disturbance"
+    },
+    "positionAnchorFresh": {
+        "message": "Bias can be learned (GPS/LIDAR)"
+    },
+    "positionInvertedBias": {
+        "message": "Inverted bias active"
+    },
+    "positionBaroGated": {
+        "message": "Last baro sample rejected"
+    },
+    "positionMeasurements": {
+        "message": "Measurements"
+    },
+    "positionBaroMeasurement": {
+        "message": "Baro (bias removed)"
+    },
+    "positionGpsMeasurement": {
+        "message": "GPS altitude"
+    },
+    "positionLidarMeasurement": {
+        "message": "LIDAR (aligned)"
+    },
+    "positionLiveHorizontal": {
+        "message": "Live: horizontal estimate"
+    },
+    "positionLiveHorizontalHelp": {
+        "message": "Top-down view, North up. The horizontal estimate only runs while armed, starting at the arm point. The red cross is the position hold target, the shaded circle the 1σ uncertainty."
+    },
+    "positionClearTrail": {
+        "message": "Clear trail"
+    },
+    "positionPosition": {
+        "message": "Position"
+    },
+    "positionVelocity": {
+        "message": "Velocity"
+    },
+    "positionSpeed": {
+        "message": "Speed"
+    },
+    "positionPositionSigma": {
+        "message": "Uncertainty (1σ)"
+    },
+    "positionGpsFused": {
+        "message": "GPS in use"
+    },
+    "positionFlowFused": {
+        "message": "Optical flow in use"
+    },
+    "positionGpsOrigin": {
+        "message": "GPS origin set"
+    },
+    "positionClamped": {
+        "message": "Drift limit (10 m) reached"
+    },
+    "positionFlowVelocity": {
+        "message": "Last flow velocity"
+    },
+    "positionLiveControllers": {
+        "message": "Live: controllers"
+    },
+    "positionLiveControllersHelp": {
+        "message": "What altitude hold, position hold and the hard deck are doing right now."
+    },
+    "positionAltSourceUsed": {
+        "message": "Altitude source"
+    },
+    "positionSourceLidar": {
+        "message": "LIDAR (height above ground)"
+    },
+    "positionSourceFused": {
+        "message": "Fused altitude"
+    },
+    "positionSourceValid": {
+        "message": "Source valid"
+    },
+    "positionStickMovesTarget": {
+        "message": "Collective moving target"
+    },
+    "positionCollectiveOutput": {
+        "message": "Collective output"
+    },
+    "positionYieldedToRescue": {
+        "message": "Paused: rescue in control"
+    },
+    "positionRollCommand": {
+        "message": "Roll command"
+    },
+    "positionPitchCommand": {
+        "message": "Pitch command"
+    },
+    "positionDeck": {
+        "message": "Deck altitude"
+    },
+    "positionPredictedMin": {
+        "message": "Predicted lowest altitude"
+    },
+    "positionHardDeckStateOff": {
+        "message": "Off"
+    },
+    "positionHardDeckStateWait": {
+        "message": "Waiting to climb above deck"
+    },
+    "positionHardDeckStateWatch": {
+        "message": "Armed, watching"
+    },
+    "positionHardDeckStatePullup": {
+        "message": "Recovering: pull-up"
+    },
+    "positionHardDeckStateFlip": {
+        "message": "Recovering: flip to upright"
+    },
+    "positionHardDeckStateClimb": {
+        "message": "Recovering: climb"
+    },
+    "positionHardDeckStateHold": {
+        "message": "Holding above deck"
+    },
+    "positionHardDeckStateExit": {
+        "message": "Returning control"
+    },
+    "positionAltHold": {
+        "message": "Altitude hold"
+    },
+    "positionPosHold": {
+        "message": "Position hold"
+    },
+    "positionHardDeck": {
+        "message": "Hard deck"
+    },
+    "positionGains": {
+        "message": "Gains"
+    },
+    "positionLimits": {
+        "message": "Limits"
+    },
+    "positionAltholdP": {
+        "message": "P gain"
+    },
+    "positionAltholdPHelp": {
+        "message": "Altitude error to climb rate, and climb-rate error to collective (both loops use this gain). CLI: althold_alt_p_gain."
+    },
+    "positionAltholdI": {
+        "message": "I gain"
+    },
+    "positionAltholdIHelp": {
+        "message": "Trims the collective until the climb rate error is zero. CLI: althold_alt_i_gain."
+    },
+    "positionAltholdD": {
+        "message": "D gain"
+    },
+    "positionAltholdDHelp": {
+        "message": "Damping on the climb rate. CLI: althold_alt_d_gain."
+    },
+    "positionAltholdMaxClimb": {
+        "message": "Max climb rate"
+    },
+    "positionAltholdMaxClimbHelp": {
+        "message": "Fastest climb or descent altitude hold will command, also when you move the target with the collective. CLI: althold_max_climb_rate."
+    },
+    "positionAltholdHover": {
+        "message": "Hover collective"
+    },
+    "positionAltholdHoverHelp": {
+        "message": "Collective needed to hover. Altitude hold starts from this value. CLI: althold_hover_collective."
+    },
+    "positionStickDeadband": {
+        "message": "Stick deadband"
+    },
+    "positionAltholdDeadbandHelp": {
+        "message": "Collective stick range around centre that leaves the altitude target alone. CLI: althold_stick_deadband."
+    },
+    "positionPosholdPosP": {
+        "message": "Position P"
+    },
+    "positionPosholdPosPHelp": {
+        "message": "Position error to velocity command. CLI: poshold_pos_p_gain."
+    },
+    "positionPosholdVelP": {
+        "message": "Velocity P"
+    },
+    "positionPosholdVelPHelp": {
+        "message": "Velocity error to tilt. CLI: poshold_vel_p_gain."
+    },
+    "positionPosholdVelI": {
+        "message": "Velocity I (wind trim)"
+    },
+    "positionPosholdVelIHelp": {
+        "message": "Learns the steady tilt needed against wind. CLI: poshold_vel_i_gain."
+    },
+    "positionPosholdMaxSpeed": {
+        "message": "Max speed"
+    },
+    "positionPosholdMaxSpeedHelp": {
+        "message": "Fastest horizontal speed position hold will command. CLI: poshold_max_horiz_speed."
+    },
+    "positionPosholdMaxTilt": {
+        "message": "Max tilt"
+    },
+    "positionPosholdMaxTiltHelp": {
+        "message": "Largest roll/pitch angle position hold will command. CLI: poshold_max_tilt_angle."
+    },
+    "positionPosholdDeadbandHelp": {
+        "message": "Cyclic stick range around centre that leaves the hold point alone. CLI: poshold_stick_deadband."
+    },
+    "positionHardDeckAltitudes": {
+        "message": "Altitudes (above the arm point)"
+    },
+    "positionHardDeckAltitude": {
+        "message": "Deck altitude"
+    },
+    "positionHardDeckAltitudeHelp": {
+        "message": "The helicopter is kept above this altitude while HARD DECK is on. CLI: harddeck_altitude."
+    },
+    "positionHardDeckArmMargin": {
+        "message": "Arm margin"
+    },
+    "positionHardDeckArmMarginHelp": {
+        "message": "The deck only arms after you have been this far above it for 1 s. CLI: harddeck_arm_margin."
+    },
+    "positionHardDeckRecoveryMargin": {
+        "message": "Recovery margin"
+    },
+    "positionHardDeckRecoveryMarginHelp": {
+        "message": "A recovery climbs to deck + this and holds there. CLI: harddeck_recovery_margin."
+    },
+    "positionHardDeckRelease": {
+        "message": "Release altitude"
+    },
+    "positionHardDeckReleaseHelp": {
+        "message": "Climbing the hold this far above the deck gives control back. 0 = only the switch releases. CLI: harddeck_release_altitude."
+    },
+    "positionHardDeckPrediction": {
+        "message": "Trigger prediction"
+    },
+    "positionHardDeckAccel": {
+        "message": "Recovery acceleration"
+    },
+    "positionHardDeckAccelHelp": {
+        "message": "Vertical acceleration assumed for a recovery. Lower = triggers earlier. CLI: harddeck_recovery_accel."
+    },
+    "positionHardDeckReaction": {
+        "message": "Reaction time"
+    },
+    "positionHardDeckReactionHelp": {
+        "message": "Delay assumed before the recovery takes effect. CLI: harddeck_reaction_time."
+    },
+    "positionHardDeckSigma": {
+        "message": "Uncertainty margin"
+    },
+    "positionHardDeckSigmaHelp": {
+        "message": "Extra margin in multiples of the altitude uncertainty. CLI: harddeck_sigma_factor."
+    },
+    "positionHardDeckUseAgl": {
+        "message": "Respect terrain (LIDAR)"
+    },
+    "positionHardDeckUseAglHelp": {
+        "message": "Also trigger on the LIDAR height above ground, e.g. over a hill. CLI: harddeck_use_agl."
+    },
+    "positionSensorsEstimator": {
+        "message": "Sensors and estimator"
+    },
+    "positionSensorsEstimatorHelp": {
+        "message": "Sensor hardware and the altitude / position estimator. These are global settings, not per profile."
+    },
+    "positionRebootNote": {
+        "message": "Changes in this section are saved with a reboot."
+    },
+    "positionHardware": {
+        "message": "Hardware"
+    },
+    "positionRangefinderHardware": {
+        "message": "Rangefinder"
+    },
+    "positionRangefinderHardwareHelp": {
+        "message": "MICROLINK reads the LIDAR from the MicroLink UART. CLI: rangefinder_hardware."
+    },
+    "positionFlowHardware": {
+        "message": "Optical flow"
+    },
+    "positionFlowHardwareHelp": {
+        "message": "Assign a UART to \"MicroLink\" in the Configuration tab as well. CLI: optical_flow_hardware."
+    },
+    "positionMicrolinkMismatch": {
+        "message": "The MicroLink rangefinder needs Optical flow set to MICROLINK, because both share one UART."
+    },
+    "positionSources": {
+        "message": "Sources"
+    },
+    "positionAltSource": {
+        "message": "Altitude source"
+    },
+    "positionAltSourceHelp": {
+        "message": "DEFAULT fuses baro, GPS and LIDAR. LIDAR_ONLY shows height above ground in OSD/telemetry. CLI: position_alt_source."
+    },
+    "positionXySource": {
+        "message": "Horizontal source"
+    },
+    "positionXySourceHelp": {
+        "message": "AUTO fuses GPS and optical flow. FLOW_ONLY for indoors. CLI: position_xy_source."
+    },
+    "positionDownwashComp": {
+        "message": "Baro downwash handling"
+    },
+    "positionDownwashCompHelp": {
+        "message": "How strongly the baro is distrusted during collective punches and fast cyclic. 0 = off. CLI: position_baro_downwash_comp."
+    },
+    "positionGpsMinSats": {
+        "message": "GPS min satellites"
+    },
+    "positionGpsMinSatsHelp": {
+        "message": "GPS is only used with at least this many satellites. CLI: position_gps_min_sats."
+    },
+    "positionFilterNoise": {
+        "message": "Kalman filter noise"
+    },
+    "positionQAccelZ": {
+        "message": "Q vertical accel"
+    },
+    "positionQAccelZHelp": {
+        "message": "Trust in the IMU prediction for altitude. Higher = follows the sensors faster. CLI: position_est_q_accel_z."
+    },
+    "positionQAccelXY": {
+        "message": "Q horizontal accel"
+    },
+    "positionQAccelXYHelp": {
+        "message": "Trust in the IMU prediction for position. CLI: position_est_q_accel_xy."
+    },
+    "positionQBaroBias": {
+        "message": "Q baro bias"
+    },
+    "positionQBaroBiasHelp": {
+        "message": "How fast the baro bias may change. CLI: position_est_q_baro_bias."
+    },
+    "positionRBaro": {
+        "message": "R baro"
+    },
+    "positionRBaroHelp": {
+        "message": "Baro noise. Higher = baro trusted less. CLI: position_est_r_baro_alt."
+    },
+    "positionRLidar": {
+        "message": "R LIDAR"
+    },
+    "positionRLidarHelp": {
+        "message": "LIDAR noise. CLI: position_est_r_lidar_alt."
+    },
+    "positionRGpsPos": {
+        "message": "R GPS position"
+    },
+    "positionRGpsPosHelp": {
+        "message": "GPS position noise at HDOP 1. CLI: position_est_r_gps_pos."
+    },
+    "positionRGpsVel": {
+        "message": "R GPS velocity"
+    },
+    "positionRGpsVelHelp": {
+        "message": "GPS velocity noise at HDOP 1. CLI: position_est_r_gps_vel."
+    },
+    "positionRGpsVvel": {
+        "message": "R GPS vertical velocity"
+    },
+    "positionRGpsVvelHelp": {
+        "message": "GPS Doppler vertical velocity noise (u-blox only). CLI: position_est_r_gps_vvel."
+    },
+    "positionRFlowVel": {
+        "message": "R flow velocity"
+    },
+    "positionRFlowVelHelp": {
+        "message": "Optical flow velocity noise at best quality. CLI: position_est_r_flow_vel."
+    },
+    "positionPrefilters": {
+        "message": "Pre-filters"
+    },
+    "positionPrefilterHelp": {
+        "message": "Low-pass filters on the raw baro and GPS altitude and on the arm-point offsets. CLI: position_*_lpf."
+    },
+    "positionBaroAltLpf": {
+        "message": "Baro altitude LPF"
+    },
+    "positionBaroOffsetLpf": {
+        "message": "Baro offset LPF"
+    },
+    "positionGpsAltLpf": {
+        "message": "GPS altitude LPF"
+    },
+    "positionGpsOffsetLpf": {
+        "message": "GPS offset LPF"
     }
 }
