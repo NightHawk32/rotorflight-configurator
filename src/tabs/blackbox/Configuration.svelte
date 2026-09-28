@@ -65,7 +65,10 @@
   });
 
   let debugModeOptions = $derived.by(() => {
-    const names = getDebugModes(FC.CONFIG.apiVersion);
+    const names = getDebugModes(
+      FC.CONFIG.apiVersion,
+      FC.POSITION_CONFIG.supported,
+    );
     const unknown = $i18n.t("blackboxDebugModeUnknown");
 
     const options = [];

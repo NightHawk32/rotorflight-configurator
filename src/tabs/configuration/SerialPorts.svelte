@@ -60,6 +60,7 @@
         !semver.gte(FC.CONFIG.apiVersion, API_VERSION_12_10)
       )
         continue;
+      if (func.name === "MICROLINK" && !FC.POSITION_CONFIG.supported) continue;
 
       options.push({
         value: func.id,

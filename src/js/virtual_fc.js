@@ -43,7 +43,7 @@ const RC_CHANNEL_COUNT = 16; // CRSF
 const TELEM_SENSOR_SLOT_COUNT = 40;
 const ARMING_DISABLE_FLAGS_COUNT = 27;
 const ARMING_DISABLED_MSP = 1 << 16;
-const DEBUG_COUNT = 82;
+const DEBUG_COUNT = 88; // src/main/build/debug.h (incl. altitude/position hold modes)
 const DEBUG_VALUE_COUNT = 8;
 const RATE_PROFILE_MASK = 1 << 7;
 
@@ -55,7 +55,7 @@ const BOXES = [
   ["ARM", 0, () => true],
   ["ANGLE", 1, hasAcc],
   ["HORIZON", 2, hasAcc],
-  ["ALTHOLD", 3, () => false],
+  ["ALTHOLD", 3, () => true],
   ["BEEPER", 13, () => true],
   ["LEDLOW", 15, () => FC.FEATURE_CONFIG.features.LED_STRIP],
   ["CALIB", 17, () => false],
@@ -84,6 +84,8 @@ const BOXES = [
   ["GOVERNOR FALLBACK", 55, () => true],
   ["GOVERNOR SUSPEND", 56, () => true],
   ["GOVERNOR BYPASS", 57, () => true],
+  ["POSHOLD", 58, () => FC.POSITION_CONFIG.supported],
+  ["HARD DECK", 59, () => FC.POSITION_CONFIG.supported],
 ];
 
 // src/main/io/ledstrip.c: hsv[]
@@ -250,6 +252,32 @@ function defaultGovernorProfile() {
   };
 }
 
+function defaultHoldProfile() {
+  // src/main/pg/pid.c: resetPidProfile(), althold.* / poshold.* / harddeck.*
+  return {
+    althold_alt_p_gain: 20,
+    althold_alt_i_gain: 5,
+    althold_alt_d_gain: 15,
+    althold_max_climb_rate: 200,
+    althold_stick_deadband: 100,
+    althold_hover_collective: 350,
+    poshold_pos_p_gain: 50,
+    poshold_vel_p_gain: 30,
+    poshold_vel_i_gain: 10,
+    poshold_max_horiz_speed: 200,
+    poshold_max_tilt_angle: 150,
+    poshold_stick_deadband: 100,
+    harddeck_altitude: 100,
+    harddeck_arm_margin: 20,
+    harddeck_recovery_margin: 30,
+    harddeck_release_altitude: 0,
+    harddeck_recovery_accel: 50,
+    harddeck_reaction_time: 300,
+    harddeck_sigma_factor: 20,
+    harddeck_use_agl: 1,
+  };
+}
+
 function defaultRateProfile() {
   // src/main/pg/rates.c, in MSP_RC_TUNING units
   return {
@@ -295,6 +323,7 @@ function defaultPidProfileBank() {
     pids: defaultPids(),
     pidProfile: defaultPidProfile(),
     governor: defaultGovernorProfile(),
+    hold: defaultHoldProfile(),
   };
 }
 
@@ -308,6 +337,7 @@ function storePidProfile() {
         clone(FC.GOVERNOR[key]),
       ]),
     ),
+    hold: clone(FC.HOLD_PROFILE),
   };
 }
 
@@ -317,6 +347,7 @@ function loadPidProfile(index) {
   FC.PIDS_ACTIVE = clone(bank.pids);
   Object.assign(FC.PID_PROFILE, bank.pidProfile);
   Object.assign(FC.GOVERNOR, bank.governor);
+  Object.assign(FC.HOLD_PROFILE, bank.hold);
   currentPidProfile = index;
   FC.CONFIG.profile = index;
 }
@@ -447,6 +478,7 @@ export function handleVirtualMessage(code, data) {
     case MSPCodes.MSP_SET_PID_PROFILE:
     case MSPCodes.MSP_SET_RESCUE_PROFILE:
     case MSPCodes.MSP_SET_GOVERNOR_PROFILE:
+    case MSPCodes.MSP2_SET_HOLD_PROFILE:
       storePidProfile();
       break;
 
@@ -672,6 +704,72 @@ export function applyVirtualConfig() {
     voltageDropRate: 10,
     chargeDropRate: 50,
     sagGain: 40,
+  });
+
+  // src/main/pg/position.c, rangefinder/optical_flow defaults
+  Object.assign(FC.POSITION_CONFIG, {
+    supported: true,
+    alt_source: 0,
+    xy_source: 0,
+    baro_alt_lpf: 100,
+    baro_offset_lpf: 5,
+    gps_alt_lpf: 25,
+    gps_offset_lpf: 5,
+    gps_min_sats: 12,
+    vario_lpf: 50,
+    est_q_accel_xy: 50000,
+    est_q_accel_z: 20000,
+    est_q_baro_bias: 400,
+    est_r_baro_alt: 1500,
+    est_r_lidar_alt: 100,
+    est_r_gps_pos: 500,
+    est_r_gps_vel: 100,
+    est_r_flow_vel: 400,
+    est_r_gps_vvel: 400,
+    baro_downwash_comp: 30,
+    rangefinder_hardware: 4,
+    optical_flow_hardware: 1,
+  });
+
+  // A disarmed model on the bench, 1.2 m over a textured floor
+  Object.assign(FC.POSITION_STATUS, {
+    flags: 0b1110000010000111, // ALT/KF/AGL valid, baro, rangefinder, flow healthy
+    altitude: 0,
+    kfAlt: 0,
+    kfVario: 0,
+    kfSigma: 38,
+    baroBias: 0,
+    disturbance: 0,
+    baroMeas: 0,
+    gpsMeas: 0,
+    rfMeas: 0,
+    aglAlt: 120,
+    aglVario: 0,
+    aglReliability: 1,
+    rangefinderRaw: 120,
+    flowX: 0,
+    flowY: 0,
+    flowQuality: 180,
+    flowStatus: 2,
+    posEast: 0,
+    posNorth: 0,
+    velEast: 0,
+    velNorth: 0,
+    posSigma: 100,
+    flowVelEast: 0,
+    flowVelNorth: 0,
+    altholdFlags: 0b110,
+    altholdTarget: 0,
+    altholdAlt: 120,
+    altholdOutput: 0,
+    posholdActive: false,
+    posholdTargetEast: 0,
+    posholdTargetNorth: 0,
+    posholdRoll: 0,
+    posholdPitch: 0,
+    harddeckState: 0,
+    harddeckPredicted: 0,
+    harddeckTarget: 0,
   });
 
   Object.assign(FC.BATTERY_STATE, {

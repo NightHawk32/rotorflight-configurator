@@ -17,6 +17,7 @@ import "./led_strip.js";
 import "./mixer.js";
 import "./motors.js";
 import "./options.js";
+import "./position.js";
 import "./power.js";
 import "./presets.js";
 import "./privacy_policy.js";

@@ -53,6 +53,7 @@ export const GuiControl = function () {
         'motors',
         'esc_programming',
         'governor',
+        'position',
         'mixer',
         'profiles',
         'rates',
