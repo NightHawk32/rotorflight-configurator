@@ -8,8 +8,9 @@
   "scripts": {
     "lint": "eslint --cache src \"./*.mjs\"",
     "lint:fix": "eslint --fix src \"./*.mjs\"",
-    "start": "concurrently --kill-others 'pnpm vite' 'pnpm gulp dev_client'",
-    "prepare": "husky || true"
+    "setup": "node tools/setup-fontawesome.mjs",
+    "start": "node tools/setup-fontawesome.mjs --if-missing && concurrently --kill-others --success first --names vite,nwjs \"pnpm vite\" \"pnpm gulp dev_client\"",
+    "prepare": "husky || exit 0"
   },
   "window": {
     "icon": "public/images/rf_icon.png",
