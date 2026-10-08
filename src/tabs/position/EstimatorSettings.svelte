@@ -10,6 +10,7 @@
   import { FC } from "@/js/fc.svelte.js";
 
   import ScaledField from "./ScaledField.svelte";
+  import { OPTICAL_FLOW_ALIGN } from "./flow_align.js";
   import {
     ALT_SOURCES,
     OPTICAL_FLOW_HARDWARE,
@@ -70,6 +71,16 @@
         id="flow-hw"
         bind:value={cfg.optical_flow_hardware}
         options={toOptions(OPTICAL_FLOW_HARDWARE)}
+      />
+    </Field>
+    <Field id="flow-align" label="positionFlowAlignSetting">
+      {#snippet tooltip()}
+        <Tooltip help="positionFlowAlignSettingHelp" />
+      {/snippet}
+      <Select
+        id="flow-align"
+        bind:value={cfg.optical_flow_align}
+        options={toOptions(OPTICAL_FLOW_ALIGN)}
       />
     </Field>
     {#if microlinkMismatch}
