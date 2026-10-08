@@ -145,6 +145,7 @@ export function getDebugModes(apiVersion, positionSupported = false) {
           "OPTICAL_FLOW",
           "POS_EST_Z",
           "POS_EST_XY",
+          "POS_EST_TERRAIN",
         ]
       : ["USER1", "USER2", "USER3", "USER4"]),
   ];
