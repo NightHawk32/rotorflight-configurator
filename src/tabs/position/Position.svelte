@@ -14,6 +14,7 @@
   import { reinitialiseConnection } from "@/js/serial_backend";
 
   import EstimatorSettings from "./EstimatorSettings.svelte";
+  import FlowAlignment from "./FlowAlignment.svelte";
   import HoldSettings from "./HoldSettings.svelte";
   import LiveAltitude from "./LiveAltitude.svelte";
   import LiveControllers from "./LiveControllers.svelte";
@@ -30,6 +31,11 @@
   let pollTimer = null;
   let polling = false;
   let lastProfile = -1;
+
+  // Bumped after every poll, drives the flow orientation check
+  let sampleCount = $state(0);
+  // optical_flow_align the firmware runs with (the saved value)
+  let activeAlign = $state(0);
 
   let history = $state({ kf: [], baro: [], gps: [], rf: [], target: [] });
   let trail = $state([]);
@@ -86,6 +92,8 @@
     if (has(st.flags, POS.XY_VALID)) {
       push(trail, { e: st.posEast, n: st.posNorth }, TRAIL);
     }
+
+    sampleCount++;
   }
 
   async function poll() {
@@ -123,6 +131,7 @@
     await MSP.promise(MSPCodes.MSP2_HOLD_PROFILE);
     await MSP.promise(MSPCodes.MSP2_POSITION_STATUS);
     lastProfile = FC.CONFIG.profile;
+    activeAlign = FC.POSITION_CONFIG.optical_flow_align;
 
     initialState = snapshotState();
     loading = false;
@@ -197,6 +206,7 @@
   <div class="content">
     <div>
       <LiveSensors />
+      <FlowAlignment {sampleCount} {activeAlign} />
       <LiveControllers />
     </div>
     <div>

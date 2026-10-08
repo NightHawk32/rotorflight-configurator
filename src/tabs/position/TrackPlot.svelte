@@ -107,7 +107,7 @@
     max-width: 300px;
     aspect-ratio: 1;
     border: 1px solid var(--color-border-soft);
-    border-radius: 4px;
+    border-radius: var(--radius-xs);
     background-color: var(--color-input-bg);
   }
 
@@ -118,24 +118,24 @@
   }
 
   .label {
-    font-size: 11px;
+    font-size: 0.7rem;
     fill: var(--color-text-soft);
   }
 
   .trail {
     fill: none;
-    stroke: #3b82f6;
+    stroke: var(--color-accent-500);
     stroke-width: 1.5;
   }
 
   .sigma {
-    fill: rgba(59, 130, 246, 0.12);
-    stroke: rgba(59, 130, 246, 0.5);
+    fill: var(--color-accent-soft);
+    stroke: var(--color-accent-700);
     stroke-width: 1;
   }
 
   .target line {
-    stroke: #ef4444;
+    stroke: var(--color-status-bad);
     stroke-width: 2;
   }
 
@@ -145,13 +145,13 @@
   }
 
   .current {
-    fill: #3b82f6;
+    fill: var(--color-accent-500);
     stroke: var(--color-text);
     stroke-width: 1;
   }
 
   .scale {
-    font-size: 12px;
+    font-size: 0.75rem;
     color: var(--color-text-soft);
     margin-top: 4px;
   }

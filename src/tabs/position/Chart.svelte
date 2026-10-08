@@ -81,7 +81,7 @@
     width: 100%;
     height: 160px;
     border: 1px solid var(--color-border-soft);
-    border-radius: 4px;
+    border-radius: var(--radius-xs);
     background-color: var(--color-input-bg);
   }
 
@@ -93,7 +93,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    font-size: 11px;
+    font-size: 0.7rem;
     color: var(--color-text-soft);
     pointer-events: none;
   }
@@ -102,7 +102,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    font-size: 12px;
+    font-size: 0.75rem;
     margin-top: 4px;
 
     i {

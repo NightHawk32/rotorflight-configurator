@@ -488,7 +488,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
             }
 
             case MSPCodes.MSP2_POSITION_CONFIG: {
-                if (data.readU8() !== 2) {
+                if (data.readU8() !== 3) {
                     console.log('Unknown position config payload version');
                     break;
                 }
@@ -515,6 +515,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 cfg.flow_gyro_comp = data.read16();
                 cfg.rangefinder_hardware = data.readU8();
                 cfg.optical_flow_hardware = data.readU8();
+                cfg.optical_flow_align = data.readU8();
                 cfg.supported = true;
                 break;
             }
@@ -559,7 +560,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
             }
 
             case MSPCodes.MSP2_POSITION_STATUS: {
-                if (data.readU8() !== 2) {
+                if (data.readU8() !== 3) {
                     break;
                 }
                 const st = FC.POSITION_STATUS;
@@ -602,6 +603,8 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 st.harddeckTarget = data.read32();
                 st.terrain = data.read32();
                 st.terrainSigma = data.readU16();
+                st.gyroRoll = data.read16() / 10;
+                st.gyroPitch = data.read16() / 10;
                 break;
             }
 
@@ -2278,7 +2281,7 @@ MspHelper.prototype.crunch = function(code) {
 
         case MSPCodes.MSP2_SET_POSITION_CONFIG: {
             const cfg = FC.POSITION_CONFIG;
-            buffer.push8(2) // payload version
+            buffer.push8(3) // payload version
                   .push8(cfg.alt_source)
                   .push8(cfg.xy_source)
                   .push8(cfg.baro_alt_lpf)
@@ -2300,7 +2303,8 @@ MspHelper.prototype.crunch = function(code) {
                   .push16(cfg.est_q_terrain)
                   .push16(cfg.flow_gyro_comp)
                   .push8(cfg.rangefinder_hardware)
-                  .push8(cfg.optical_flow_hardware);
+                  .push8(cfg.optical_flow_hardware)
+                  .push8(cfg.optical_flow_align);
             break;
         }
 

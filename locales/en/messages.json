@@ -8866,7 +8866,7 @@
     "presetsButtonReview": {
         "message": "Review Selected Presets"
     },
-    "presetsButtonReviewCLI":{
+    "presetsButtonReviewCLI": {
         "message": "Review CLI"
     },
     "presetsButtonApply": {
@@ -9397,10 +9397,10 @@
         "message": "Flow quality"
     },
     "positionFlowRawX": {
-        "message": "Raw flow X (forward)"
+        "message": "Flow X (forward)"
     },
     "positionFlowRawY": {
-        "message": "Raw flow Y (left)"
+        "message": "Flow Y (left)"
     },
     "positionFlowStatus": {
         "message": "Last sample"
@@ -9426,8 +9426,128 @@
     "positionFlowDirection": {
         "message": "Flow direction check"
     },
-    "positionFlowDirectionHelp": {
-        "message": "Hold the model level over a textured floor. Slide it forward: the arrow must point up. Slide it right: the arrow must point right. If not, the sensor is mounted rotated or mirrored."
+    "positionFlowAlign": {
+        "message": "Optical flow orientation"
+    },
+    "positionFlowAlignHelp": {
+        "message": "Finds out how the optical flow sensor is mounted. Hold the model level over a textured floor, slide it forward, then to the right, then rock it in place. The check compares the measured flow with the expected direction and suggests the orientation and the body-rate compensation. It works disarmed."
+    },
+    "positionFlowAlignStepPrepare": {
+        "message": "Prepare"
+    },
+    "positionFlowAlignStepForward": {
+        "message": "Forward"
+    },
+    "positionFlowAlignStepRight": {
+        "message": "Right"
+    },
+    "positionFlowAlignStepRotate": {
+        "message": "Rotate"
+    },
+    "positionFlowAlignStepResult": {
+        "message": "Result"
+    },
+    "positionFlowAlignCurrent": {
+        "message": "Orientation in use"
+    },
+    "positionFlowAlignPrepareText": {
+        "message": "Hold the model level, 0.3–1 m above a textured floor in good light, with the flow sensor seeing the floor. Keep the nose pointing the same way during every step."
+    },
+    "positionFlowAlignStart": {
+        "message": "Start"
+    },
+    "positionFlowAlignForwardText": {
+        "message": "Press Record, slide the model straight forward by about 0.5 m without tilting it, then press Stop."
+    },
+    "positionFlowAlignRightText": {
+        "message": "Press Record, slide the model straight to the right by about 0.5 m without tilting it, then press Stop."
+    },
+    "positionFlowAlignRotateText": {
+        "message": "Press Record and, without moving the model sideways, rock it nose up and down and roll it left and right by about 20° for 8 seconds. This measures the body-rate compensation. Skip leaves the compensation unchanged."
+    },
+    "positionFlowAlignRecord": {
+        "message": "Record"
+    },
+    "positionFlowAlignStop": {
+        "message": "Stop"
+    },
+    "positionFlowAlignRepeat": {
+        "message": "Repeat"
+    },
+    "positionFlowAlignSkip": {
+        "message": "Skip"
+    },
+    "positionFlowAlignApply": {
+        "message": "Apply"
+    },
+    "positionFlowAlignRestart": {
+        "message": "Start over"
+    },
+    "positionFlowAlignTravel": {
+        "message": "Measured motion"
+    },
+    "positionFlowAlignRate": {
+        "message": "Body rate (RMS)"
+    },
+    "positionFlowAlignRecording": {
+        "message": "Recording"
+    },
+    "positionFlowAlignDetected": {
+        "message": "Detected orientation"
+    },
+    "positionFlowAlignAxisError": {
+        "message": "Deviation forward / right"
+    },
+    "positionFlowAlignGyroComp": {
+        "message": "Body-rate compensation"
+    },
+    "positionFlowAlignNow": {
+        "message": "now"
+    },
+    "positionFlowAlignGyroCompAxes": {
+        "message": "Fit pitch / roll"
+    },
+    "positionFlowAlignResidual": {
+        "message": "Rotation left after compensation"
+    },
+    "positionFlowAlignCorrect": {
+        "message": "The sensor orientation and the body-rate compensation match the current settings."
+    },
+    "positionFlowAlignApplied": {
+        "message": "Applied. Save and reboot, then run the check again: it must report the orientation as correct."
+    },
+    "positionFlowAlignCompWarning": {
+        "message": "The compensation is far from 100 % or pitch and roll disagree. Repeat the rotate step slowly over a textured floor before applying it."
+    },
+    "positionFlowAlignNoFlow": {
+        "message": "No optical flow data. Check the MicroLink wiring and that a UART is assigned to MicroLink."
+    },
+    "positionFlowAlignUnsaved": {
+        "message": "The orientation setting has unsaved changes. Save first: the check measures relative to the orientation the flight controller uses."
+    },
+    "positionFlowAlignLowQuality": {
+        "message": "The flow quality was low (mean {{quality}}). Use a textured floor and good light, otherwise the result is unreliable."
+    },
+    "positionFlowAlignErrorTooShort": {
+        "message": "Too little motion. Slide the model further (about 0.5 m) while the flow quality is above 50."
+    },
+    "positionFlowAlignErrorNotPerpendicular": {
+        "message": "The forward and right slides are not at a right angle. Repeat both slides in straight lines without turning the model."
+    },
+    "positionFlowAlignErrorOffAxis": {
+        "message": "The motion does not line up with any sensor axis. The sensor may be mounted at an angle that is not a multiple of 90°, or a slide was not straight. Repeat the slides."
+    },
+    "positionFlowAlignErrorNoRotation": {
+        "message": "No usable rotation was recorded. Repeat the rotate step with the flow quality above 50."
+    },
+    "positionFlowAlignErrorTooLittleRotation": {
+        "message": "Too little rotation. Rock and roll the model further (about 20°) during the recording."
+    },
+    "positionFlowAlignSetting": {
+        "message": "Optical flow orientation"
+    },
+    "positionFlowAlignSettingHelp": {
+        "message": "How the flow sensor is mounted, seen from above: CWn = the sensor's X axis points n degrees clockwise from the nose. FLIP mirrors the sensor's Y axis. Use the orientation check in the Live section to find it. CLI: optical_flow_align."
     },
     "positionLiveAltitude": {
         "message": "Live: altitude estimate"

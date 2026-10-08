@@ -199,6 +199,7 @@ class FlightController {
       flow_gyro_comp:             0,
       rangefinder_hardware:       0,
       optical_flow_hardware:      0,
+      optical_flow_align:         0,
     };
 
     // MSP2_HOLD_PROFILE: per PID profile, keys match the CLI names
@@ -266,6 +267,8 @@ class FlightController {
       harddeckTarget:             0,
       terrain:                    0,
       terrainSigma:               0,
+      gyroRoll:                   0,
+      gyroPitch:                  0,
     };
 
     this.ANALOG = {

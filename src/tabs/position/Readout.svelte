@@ -18,7 +18,7 @@
     gap: 8px;
     padding: 3px 0;
     border-bottom: 1px solid var(--color-border-soft);
-    font-size: 13px;
+    font-size: 0.82rem;
   }
 
   .label {
@@ -30,17 +30,17 @@
     text-align: right;
 
     &.ok {
-      color: #16a34a;
+      color: var(--color-status-good);
       font-weight: 600;
     }
 
     &.warn {
-      color: #d97706;
+      color: var(--color-warning);
       font-weight: 600;
     }
 
     &.bad {
-      color: #dc2626;
+      color: var(--color-status-bad);
       font-weight: 600;
     }
   }
