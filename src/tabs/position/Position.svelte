@@ -15,6 +15,7 @@
 
   import EstimatorSettings from "./EstimatorSettings.svelte";
   import FlowAlignment from "./FlowAlignment.svelte";
+  import FlowRotation from "./FlowRotation.svelte";
   import HoldSettings from "./HoldSettings.svelte";
   import LiveAltitude from "./LiveAltitude.svelte";
   import LiveControllers from "./LiveControllers.svelte";
@@ -25,6 +26,7 @@
   const POLL_MS = 100; // 10 Hz: the estimator runs at 100 Hz, sensors at 50 Hz
   const HISTORY = 300; // 30 s of altitude history
   const TRAIL = 600; // 60 s of position trail
+  const FLOW_HISTORY = 100; // 10 s of flow for the rotation check
 
   let loading = $state(true);
   let initialState;
@@ -38,6 +40,8 @@
   let activeAlign = $state(0);
 
   let history = $state({ kf: [], baro: [], gps: [], rf: [], target: [] });
+  // Flow before and after the rotation compensation, and the body rates
+  let flowHistory = $state({ x: [], compX: [], y: [], compY: [], rate: [] });
   let trail = $state([]);
 
   function snapshotState() {
@@ -92,6 +96,13 @@
     if (has(st.flags, POS.XY_VALID)) {
       push(trail, { e: st.posEast, n: st.posNorth }, TRAIL);
     }
+
+    const flowOk = has(st.flags, POS.FLOW_HEALTHY);
+    push(flowHistory.x, flowOk ? st.flowX : null, FLOW_HISTORY);
+    push(flowHistory.compX, flowOk ? st.flowCompX : null, FLOW_HISTORY);
+    push(flowHistory.y, flowOk ? st.flowY : null, FLOW_HISTORY);
+    push(flowHistory.compY, flowOk ? st.flowCompY : null, FLOW_HISTORY);
+    push(flowHistory.rate, Math.hypot(st.gyroRoll, st.gyroPitch), FLOW_HISTORY);
 
     sampleCount++;
   }
@@ -207,6 +218,7 @@
     <div>
       <LiveSensors />
       <FlowAlignment {sampleCount} {activeAlign} />
+      <FlowRotation history={flowHistory} />
       <LiveControllers />
     </div>
     <div>

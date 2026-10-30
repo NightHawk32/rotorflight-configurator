@@ -212,6 +212,7 @@ class FlightController {
       baro_downwash_comp:         0,
       est_q_terrain:              0,
       flow_gyro_comp:             0,
+      flow_gyro_delay:            0,
       rangefinder_hardware:       0,
       optical_flow_hardware:      0,
       optical_flow_align:         0,
@@ -284,6 +285,8 @@ class FlightController {
       terrainSigma:               0,
       gyroRoll:                   0,
       gyroPitch:                  0,
+      flowCompX:                  0,
+      flowCompY:                  0,
     };
 
     this.ANALOG = {

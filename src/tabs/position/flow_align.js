@@ -62,13 +62,11 @@ const RAD = Math.PI / 180;
 // Minimum integrated flow of a slide, "cm at 1 m" (about 0.2 m of travel
 // at 1 m height)
 export const MIN_SLIDE = 20;
-// Minimum RMS body rate of the rocking step, deg/s
-export const MIN_ROCK_RATE = 20;
 // A slide that ends up more than this far off its axis is not trusted, deg
 export const MAX_AXIS_ERROR = 30;
 
 // Accumulates one recording step. Samples are { t (ms), flowX, flowY,
-// quality, gyroRoll, gyroPitch (deg/s) } as reported by the firmware.
+// quality } as reported by the firmware.
 export class Recorder {
   constructor() {
     this.samples = [];
@@ -99,15 +97,6 @@ export class Recorder {
 
   get meanQuality() {
     return this.samples.length ? this.qualitySum / this.samples.length : 0;
-  }
-
-  get rmsRate() {
-    if (!this.samples.length) return 0;
-    let s = 0;
-    for (const p of this.samples) {
-      s += p.gyroRoll ** 2 + p.gyroPitch ** 2;
-    }
-    return Math.sqrt(s / this.samples.length);
   }
 }
 
@@ -171,59 +160,5 @@ export function detectAlignment(forward, right, currentAlign) {
     forwardError,
     rightError,
     orthogonality,
-  };
-}
-
-// Body-rate compensation from the rocking step.
-//
-// The firmware (flight/position.c) fuses
-//     flowFwd  = X + comp * pitchRate(rad/s)
-//     flowLeft = Y - comp * rollRate(rad/s)
-// and both must stay near zero while the model only rotates. Least squares
-// over both axes gives the comp that cancels the rotation best, in the
-// firmware's units (percent of the physical value: 100 cm/s at 1 m per
-// rad/s). The flow is first corrected with the detected orientation.
-//
-// Returns { comp, compPitch, compRoll, residual } or { error }.
-export function detectGyroComp(samples, correction) {
-  let numP = 0;
-  let denP = 0;
-  let numR = 0;
-  let denR = 0;
-  let raw = 0;
-
-  for (const s of samples) {
-    const [x, y] = apply(correction, [s.flowX, s.flowY]);
-    const p = s.gyroPitch * RAD;
-    const r = s.gyroRoll * RAD;
-    numP += -x * p;
-    denP += p * p;
-    numR += y * r;
-    denR += r * r;
-    raw += x * x + y * y;
-  }
-  const num = numP + numR;
-  const den = denP + denR;
-
-  if (!samples.length || den <= 0) {
-    return { error: "positionFlowAlignErrorNoRotation" };
-  }
-
-  const comp = num / den;
-
-  // Share of the raw flow that the fitted compensation leaves over
-  let left = 0;
-  for (const s of samples) {
-    const [x, y] = apply(correction, [s.flowX, s.flowY]);
-    const fx = x + comp * s.gyroPitch * RAD;
-    const fy = y - comp * s.gyroRoll * RAD;
-    left += fx * fx + fy * fy;
-  }
-
-  return {
-    comp,
-    compPitch: denP > 0 ? numP / denP : null,
-    compRoll: denR > 0 ? numR / denR : null,
-    residual: raw > 0 ? Math.sqrt(left / raw) : 1,
   };
 }

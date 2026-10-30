@@ -878,8 +878,12 @@ export function applyVirtualConfig() {
     est_r_flow_vel: 400,
     est_r_gps_vvel: 400,
     baro_downwash_comp: 30,
+    est_q_terrain: 200,
+    flow_gyro_comp: 100,
+    flow_gyro_delay: 50,
     rangefinder_hardware: 4,
     optical_flow_hardware: 1,
+    optical_flow_align: 0,
   });
 
   // A disarmed model on the bench, 1.2 m over a textured floor
@@ -901,7 +905,7 @@ export function applyVirtualConfig() {
     flowX: 0,
     flowY: 0,
     flowQuality: 180,
-    flowStatus: 2,
+    flowStatus: 0,
     posEast: 0,
     posNorth: 0,
     velEast: 0,

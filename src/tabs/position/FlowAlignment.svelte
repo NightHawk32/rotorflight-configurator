@@ -14,12 +14,10 @@
 
   import Readout from "./Readout.svelte";
   import {
-    MIN_ROCK_RATE,
     MIN_SLIDE,
     OPTICAL_FLOW_ALIGN,
     Recorder,
     detectAlignment,
-    detectGyroComp,
   } from "./flow_align.js";
   import { POS, has } from "./status.js";
 
@@ -32,13 +30,9 @@
     "positionFlowAlignStepPrepare",
     "positionFlowAlignStepForward",
     "positionFlowAlignStepRight",
-    "positionFlowAlignStepRotate",
     "positionFlowAlignStepResult",
   ];
-  const ROTATE_MS = 8000;
   const QUALITY_MIN = 50; // firmware FLOW_QUALITY_MIN
-  const COMP_MIN = -200;
-  const COMP_MAX = 200;
 
   let st = $derived(FC.POSITION_STATUS);
   let cfg = $derived(FC.POSITION_CONFIG);
@@ -51,14 +45,12 @@
   let step = $state(1);
   let recording = $state(false);
   let recorder = null;
-  let progress = $state({ length: 0, rate: 0, quality: 0, elapsed: 0 });
-  let recordStart = 0;
+  let progress = $state({ length: 0, quality: 0 });
   let dropouts = $state(0);
 
   let forward = null;
   let right = null;
   let detection = $state(null);
-  let gyroFit = $state(null);
   let error = $state(null);
   let lowQuality = $state(null);
   let applied = $state(false);
@@ -95,21 +87,12 @@
       flowX: st.flowX,
       flowY: st.flowY,
       quality: st.flowQuality,
-      gyroRoll: st.gyroRoll,
-      gyroPitch: st.gyroPitch,
     });
 
-    const elapsed = performance.now() - recordStart;
     progress = {
       length: recorder.length,
-      rate: recorder.rmsRate,
       quality: recorder.meanQuality,
-      elapsed,
     };
-
-    if (step === 4 && elapsed >= ROTATE_MS) {
-      stopRecording();
-    }
   }
 
   function startRecording() {
@@ -117,8 +100,7 @@
     lowQuality = null;
     dropouts = 0;
     recorder = new Recorder();
-    progress = { length: 0, rate: 0, quality: 0, elapsed: 0 };
-    recordStart = performance.now();
+    progress = { length: 0, quality: 0 };
     recording = true;
   }
 
@@ -130,48 +112,23 @@
       lowQuality = Math.round(rec.meanQuality);
     }
 
-    if (step === 2 || step === 3) {
-      if (rec.length < MIN_SLIDE) {
-        error = "positionFlowAlignErrorTooShort";
-        return;
-      }
-      if (step === 2) {
-        forward = [...rec.vector];
-        step = 3;
-        return;
-      }
-      right = [...rec.vector];
-      const result = detectAlignment(forward, right, activeAlign);
-      if (result.error) {
-        error = result.error;
-        return;
-      }
-      detection = result;
-      step = 4;
+    if (rec.length < MIN_SLIDE) {
+      error = "positionFlowAlignErrorTooShort";
       return;
     }
-
-    if (step === 4) {
-      if (rec.rmsRate < MIN_ROCK_RATE) {
-        error = "positionFlowAlignErrorTooLittleRotation";
-        return;
-      }
-      const usable = rec.samples.filter((s) => s.quality > QUALITY_MIN);
-      const fit = detectGyroComp(usable, detection.correction);
-      if (fit.error) {
-        error = fit.error;
-        return;
-      }
-      gyroFit = fit;
-      step = 5;
+    if (step === 2) {
+      forward = [...rec.vector];
+      step = 3;
+      return;
     }
-  }
-
-  function skipRotate() {
-    recording = false;
-    error = null;
-    gyroFit = null;
-    step = 5;
+    right = [...rec.vector];
+    const result = detectAlignment(forward, right, activeAlign);
+    if (result.error) {
+      error = result.error;
+      return;
+    }
+    detection = result;
+    step = 4;
   }
 
   function restart() {
@@ -179,7 +136,6 @@
     forward = null;
     right = null;
     detection = null;
-    gyroFit = null;
     error = null;
     lowQuality = null;
     applied = false;
@@ -196,40 +152,17 @@
       forward = null;
       right = null;
     }
-    gyroFit = null;
     error = null;
     applied = false;
     step = n;
   }
 
-  let recommendedComp = $derived(
-    gyroFit
-      ? Math.max(COMP_MIN, Math.min(COMP_MAX, Math.round(gyroFit.comp)))
-      : null,
-  );
-
-  // A compensation far from the physical value, or pitch and roll
-  // disagreeing, points at a bad recording rather than a real property
-  let compSuspicious = $derived(
-    gyroFit !== null &&
-      (Math.abs(Math.abs(gyroFit.comp) - 100) > 40 ||
-        (gyroFit.compPitch !== null &&
-          gyroFit.compRoll !== null &&
-          Math.abs(gyroFit.compPitch - gyroFit.compRoll) > 50)),
-  );
-
   let alignChanged = $derived(
     detection !== null && detection.align !== activeAlign,
-  );
-  let compChanged = $derived(
-    recommendedComp !== null && recommendedComp !== cfg.flow_gyro_comp,
   );
 
   function apply() {
     cfg.optical_flow_align = detection.align;
-    if (recommendedComp !== null) {
-      cfg.flow_gyro_comp = recommendedComp;
-    }
     applied = true;
   }
 
@@ -321,37 +254,6 @@
             </button>
           {/if}
         </div>
-      {:else if step === 4}
-        <p>{$i18n.t("positionFlowAlignRotateText")}</p>
-        <Meter
-          title={$i18n.t("positionFlowAlignRate")}
-          leftLabel={`${progress.rate.toFixed(0)} °/s`}
-          rightLabel={`≥${MIN_ROCK_RATE} °/s`}
-          value={Math.min(100, (progress.rate / MIN_ROCK_RATE) * 50)}
-        />
-        {#if recording}
-          <Meter
-            title={$i18n.t("positionFlowAlignRecording")}
-            leftLabel={`${Math.max(0, (ROTATE_MS - progress.elapsed) / 1000).toFixed(0)} s`}
-            rightLabel=""
-            value={(progress.elapsed / ROTATE_MS) * 100}
-            compact
-          />
-        {/if}
-        <div class="buttons">
-          <button class="btn" disabled={recording} onclick={skipRotate}>
-            {$i18n.t("positionFlowAlignSkip")}
-          </button>
-          <button
-            class="btn-primary"
-            disabled={recording || !flowHealthy}
-            onclick={startRecording}
-          >
-            {$i18n.t(
-              error ? "positionFlowAlignRepeat" : "positionFlowAlignRecord",
-            )}
-          </button>
-        </div>
       {:else}
         <Readout
           label="positionFlowAlignDetected"
@@ -362,36 +264,17 @@
           label="positionFlowAlignAxisError"
           value={`${fmtDeg(detection.forwardError)} / ${fmtDeg(detection.rightError)}`}
         />
-        {#if gyroFit}
-          <Readout
-            label="positionFlowAlignGyroComp"
-            value={`${recommendedComp} % (${$i18n.t("positionFlowAlignNow")} ${cfg.flow_gyro_comp} %)`}
-            state={compSuspicious ? "warn" : compChanged ? "warn" : "ok"}
-          />
-          <Readout
-            label="positionFlowAlignGyroCompAxes"
-            value={`${gyroFit.compPitch?.toFixed(0) ?? "-"} / ${gyroFit.compRoll?.toFixed(0) ?? "-"} %`}
-          />
-          <Readout
-            label="positionFlowAlignResidual"
-            value={`${(gyroFit.residual * 100).toFixed(0)} %`}
-          />
-        {/if}
-
         {#if applied}
           <InfoNote message="positionFlowAlignApplied" />
-        {:else if !alignChanged && !compChanged}
+        {:else if !alignChanged}
           <InfoNote message="positionFlowAlignCorrect" />
-        {/if}
-        {#if compSuspicious}
-          <WarningNote message="positionFlowAlignCompWarning" />
         {/if}
 
         <div class="buttons">
           <button class="btn" onclick={restart}>
             {$i18n.t("positionFlowAlignRestart")}
           </button>
-          {#if alignChanged || compChanged}
+          {#if alignChanged}
             <button class="btn-primary" disabled={applied} onclick={apply}>
               {$i18n.t("positionFlowAlignApply")}
             </button>

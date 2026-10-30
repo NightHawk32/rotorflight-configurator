@@ -141,6 +141,18 @@
       label="positionFlowGyroComp"
       help="positionFlowGyroCompHelp"
     />
+    <ScaledField
+      id="flow-gyro-delay"
+      obj={cfg}
+      key="flow_gyro_delay"
+      min={0}
+      max={250}
+      step={10}
+      def={50}
+      unit="ms"
+      label="positionFlowGyroDelay"
+      help="positionFlowGyroDelayHelp"
+    />
   </SubSection>
   <Expert>
     <SubSection label="positionFilterNoise">

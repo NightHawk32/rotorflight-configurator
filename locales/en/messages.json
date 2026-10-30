@@ -10033,7 +10033,7 @@
         "message": "Optical flow orientation"
     },
     "positionFlowAlignHelp": {
-        "message": "Finds out how the optical flow sensor is mounted. Hold the model level over a textured floor, slide it forward, then to the right, then rock it in place. The check compares the measured flow with the expected direction and suggests the orientation and the body-rate compensation. It works disarmed."
+        "message": "Finds out how the optical flow sensor is mounted from two straight motions: forward, then to the right. Either slide the model over a textured floor, or leave it standing and pull a textured mat (towel, rug, printed sheet) under it in the opposite direction. The check compares the measured flow with the expected direction and suggests the orientation. It works disarmed."
     },
     "positionFlowAlignStepPrepare": {
         "message": "Prepare"
@@ -10044,9 +10044,6 @@
     "positionFlowAlignStepRight": {
         "message": "Right"
     },
-    "positionFlowAlignStepRotate": {
-        "message": "Rotate"
-    },
     "positionFlowAlignStepResult": {
         "message": "Result"
     },
@@ -10054,19 +10051,16 @@
         "message": "Orientation in use"
     },
     "positionFlowAlignPrepareText": {
-        "message": "Hold the model level, 0.3–1 m above a textured floor in good light, with the flow sensor seeing the floor. Keep the nose pointing the same way during every step."
+        "message": "Place the model level over a textured surface in good light, with the flow sensor seeing it. It can stand on the floor; if the sensor is too close to see the texture, rest the model on two supports (chairs, table edge) so that the sensor looks down onto the floor or a mat. Keep the nose pointing the same way during every step."
     },
     "positionFlowAlignStart": {
         "message": "Start"
     },
     "positionFlowAlignForwardText": {
-        "message": "Press Record, slide the model straight forward by about 0.5 m without tilting it, then press Stop."
+        "message": "Press Record, then either slide the model straight forward by about 0.5 m without tilting it, or pull the mat straight backward (towards the tail) by the same amount under the standing model. Press Stop."
     },
     "positionFlowAlignRightText": {
-        "message": "Press Record, slide the model straight to the right by about 0.5 m without tilting it, then press Stop."
-    },
-    "positionFlowAlignRotateText": {
-        "message": "Press Record and, without moving the model sideways, rock it nose up and down and roll it left and right by about 20° for 8 seconds. This measures the body-rate compensation. Skip leaves the compensation unchanged."
+        "message": "Press Record, then either slide the model straight to the right by about 0.5 m without tilting it, or pull the mat straight to the left under the standing model. Press Stop."
     },
     "positionFlowAlignRecord": {
         "message": "Record"
@@ -10077,9 +10071,6 @@
     "positionFlowAlignRepeat": {
         "message": "Repeat"
     },
-    "positionFlowAlignSkip": {
-        "message": "Skip"
-    },
     "positionFlowAlignApply": {
         "message": "Apply"
     },
@@ -10089,38 +10080,17 @@
     "positionFlowAlignTravel": {
         "message": "Measured motion"
     },
-    "positionFlowAlignRate": {
-        "message": "Body rate (RMS)"
-    },
-    "positionFlowAlignRecording": {
-        "message": "Recording"
-    },
     "positionFlowAlignDetected": {
         "message": "Detected orientation"
     },
     "positionFlowAlignAxisError": {
         "message": "Deviation forward / right"
     },
-    "positionFlowAlignGyroComp": {
-        "message": "Body-rate compensation"
-    },
-    "positionFlowAlignNow": {
-        "message": "now"
-    },
-    "positionFlowAlignGyroCompAxes": {
-        "message": "Fit pitch / roll"
-    },
-    "positionFlowAlignResidual": {
-        "message": "Rotation left after compensation"
-    },
     "positionFlowAlignCorrect": {
-        "message": "The sensor orientation and the body-rate compensation match the current settings."
+        "message": "The sensor orientation matches the current setting."
     },
     "positionFlowAlignApplied": {
         "message": "Applied. Save and reboot, then run the check again: it must report the orientation as correct."
-    },
-    "positionFlowAlignCompWarning": {
-        "message": "The compensation is far from 100 % or pitch and roll disagree. Repeat the rotate step slowly over a textured floor before applying it."
     },
     "positionFlowAlignNoFlow": {
         "message": "No optical flow data. Check the MicroLink wiring and that a UART is assigned to MicroLink."
@@ -10132,7 +10102,7 @@
         "message": "The flow quality was low (mean {{quality}}). Use a textured floor and good light, otherwise the result is unreliable."
     },
     "positionFlowAlignErrorTooShort": {
-        "message": "Too little motion. Slide the model further (about 0.5 m) while the flow quality is above 50."
+        "message": "Too little motion. Slide the model (or the mat) further, about 0.5 m, while the flow quality is above 50."
     },
     "positionFlowAlignErrorNotPerpendicular": {
         "message": "The forward and right slides are not at a right angle. Repeat both slides in straight lines without turning the model."
@@ -10140,11 +10110,47 @@
     "positionFlowAlignErrorOffAxis": {
         "message": "The motion does not line up with any sensor axis. The sensor may be mounted at an angle that is not a multiple of 90°, or a slide was not straight. Repeat the slides."
     },
-    "positionFlowAlignErrorNoRotation": {
-        "message": "No usable rotation was recorded. Repeat the rotate step with the flow quality above 50."
+    "positionFlowRotation": {
+        "message": "Rotation compensation"
     },
-    "positionFlowAlignErrorTooLittleRotation": {
-        "message": "Too little rotation. Rock and roll the model further (about 20°) during the recording."
+    "positionFlowRotationHelp": {
+        "message": "Raw optical flow against the flow after the body-rate compensation, as the flight controller computes it (with the delay setting). While the model only rotates, the compensated flow must stay near zero. Works disarmed."
+    },
+    "positionFlowRotationSetup": {
+        "message": "Only meaningful with the ground well below the sensor (at least 0.5 m): rest the model on two supports or a table edge and rock it there. Rocking it on the floor shows almost no flow, because the sensor keeps looking at the same spot. In flight, check it from a hover log (tools/bbl_tune.py)."
+    },
+    "positionFlowRotationForward": {
+        "message": "Forward axis"
+    },
+    "positionFlowRotationLeft": {
+        "message": "Left axis"
+    },
+    "positionFlowRotationResult": {
+        "message": "Result"
+    },
+    "positionFlowRotationRaw": {
+        "message": "Raw"
+    },
+    "positionFlowRotationCompensated": {
+        "message": "Compensated"
+    },
+    "positionFlowRotationSettings": {
+        "message": "Compensation / delay"
+    },
+    "positionFlowRotationRms": {
+        "message": "Flow while rotating (RMS raw → compensated)"
+    },
+    "positionFlowRotationRemoved": {
+        "message": "Rotation removed"
+    },
+    "positionFlowRotationRateNow": {
+        "message": "Body rate now"
+    },
+    "positionFlowRotationSamples": {
+        "message": "Samples above 20 °/s (last 10 s)"
+    },
+    "positionFlowRotationNoRotation": {
+        "message": "rotate faster than {{rate}} °/s"
     },
     "positionFlowAlignSetting": {
         "message": "Optical flow orientation"
@@ -10222,7 +10228,7 @@
         "message": "Live: horizontal estimate"
     },
     "positionLiveHorizontalHelp": {
-        "message": "Top-down view, North up. The horizontal estimate only runs while armed, starting at the arm point. The red cross is the position hold target, the shaded circle the 1σ uncertainty."
+        "message": "Top-down view, North up. The horizontal estimate also runs while disarmed, so it can be checked on the bench; arming resets it to the arm point. The red cross is the position hold target, the shaded circle the 1σ uncertainty."
     },
     "positionClearTrail": {
         "message": "Clear trail"
@@ -10570,7 +10576,13 @@
         "message": "Flow body-rate compensation"
     },
     "positionFlowGyroCompHelp": {
-        "message": "Removes the apparent ground motion the optical flow sees while the model pitches or rolls. 100 = physically exact, 0 = off, negative for a module whose axes are mirrored. Check: with props off and armed, pitching or rolling in place must leave the flow velocity near zero. CLI: position_flow_gyro_comp."
+        "message": "Removes the apparent ground motion the optical flow sees while the model pitches or rolls. 100 = physically exact and normally right for every model, 0 = off, negative for a module whose axes are mirrored. Check it in the Rotation compensation section or from a hover log. CLI: position_flow_gyro_comp."
+    },
+    "positionFlowGyroDelay": {
+        "message": "Flow delay behind the gyro"
+    },
+    "positionFlowGyroDelayHelp": {
+        "message": "How much later the optical flow module reports a motion than the gyro. The body-rate compensation uses the gyro from this long ago, so that it lines up with the flow. A property of the module (MicroLink: about 50 ms), not of the model. tools/bbl_tune.py measures it from a hover log with debug_mode OPTICAL_FLOW. CLI: position_flow_gyro_delay."
     },
     "positionRFlowVel": {
         "message": "R flow velocity"
