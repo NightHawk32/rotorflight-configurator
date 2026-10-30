@@ -10026,6 +10026,9 @@
     "positionFlowStatusTilt": {
         "message": "Not used: tilted more than 45°"
     },
+    "positionFlowStatusOutlier": {
+        "message": "Not used: rejected as an outlier"
+    },
     "positionFlowDirection": {
         "message": "Flow direction check"
     },

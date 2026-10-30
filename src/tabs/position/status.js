@@ -36,6 +36,7 @@ export const FLOW_STATUS_KEYS = [
   "positionFlowStatusNoAgl",
   "positionFlowStatusLowQuality",
   "positionFlowStatusTilt",
+  "positionFlowStatusOutlier",
 ];
 
 export const HARDDECK_STATE_KEYS = [
