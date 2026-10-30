@@ -10339,22 +10339,22 @@
         "message": "Limits"
     },
     "positionAltholdP": {
-        "message": "P gain"
+        "message": "Altitude gain"
     },
     "positionAltholdPHelp": {
-        "message": "Altitude error to climb rate, and climb-rate error to collective (both loops use this gain). CLI: althold_alt_p_gain."
+        "message": "How firmly the model returns to the target height: altitude error to climb rate, ÷10 (10 = 1 m/s per metre). CLI: althold_alt_p_gain."
     },
     "positionAltholdI": {
-        "message": "I gain"
+        "message": "Climb rate I"
     },
     "positionAltholdIHelp": {
-        "message": "Trims the collective until the climb rate error is zero. CLI: althold_alt_i_gain."
+        "message": "Trims the collective until the climb rate matches the command, so the model settles at the target. CLI: althold_alt_i_gain."
     },
     "positionAltholdD": {
-        "message": "D gain"
+        "message": "Climb rate gain"
     },
     "positionAltholdDHelp": {
-        "message": "Damping on the climb rate. CLI: althold_alt_d_gain."
+        "message": "Collective per m/s of climb-rate error (×5: 15 = 75 of 1000). The damping of the hold: lower it if the model bobs, raise it if it is sluggish. CLI: althold_alt_d_gain."
     },
     "positionAltholdMaxClimb": {
         "message": "Max climb rate"
@@ -10366,13 +10366,13 @@
         "message": "Hover collective"
     },
     "positionAltholdHoverHelp": {
-        "message": "Collective needed to hover. Altitude hold starts from this value. CLI: althold_hover_collective."
+        "message": "Collective needed to hover. Engaging is bumpless (the hold starts from the collective being flown), so this is the fallback while the altitude is invalid. Set it to the hover value from a log. CLI: althold_hover_collective."
     },
     "positionStickDeadband": {
         "message": "Stick deadband"
     },
     "positionAltholdDeadbandHelp": {
-        "message": "Collective stick range around centre that leaves the altitude target alone. CLI: althold_stick_deadband."
+        "message": "Collective stick range around the position it had when altitude hold was switched on that leaves the altitude target alone. Beyond it, the target climbs or descends. CLI: althold_stick_deadband."
     },
     "positionPosholdPosP": {
         "message": "Position P"

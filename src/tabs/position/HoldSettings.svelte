@@ -27,7 +27,7 @@
       key="althold_alt_p_gain"
       min={0}
       max={1000}
-      def={20}
+      def={10}
       label="positionAltholdP"
       help="positionAltholdPHelp"
     />
