@@ -10582,7 +10582,7 @@
         "message": "Flow delay behind the gyro"
     },
     "positionFlowGyroDelayHelp": {
-        "message": "How much later the optical flow module reports a motion than the gyro. The body-rate compensation uses the gyro from this long ago, so that it lines up with the flow. A property of the module (MicroLink: about 50 ms), not of the model. tools/bbl_tune.py measures it from a hover log with debug_mode OPTICAL_FLOW. CLI: position_flow_gyro_delay."
+        "message": "How much later the optical flow module reports a motion than the gyro. The body-rate compensation uses the gyro from this long ago, so that it lines up with the flow. A property of the module (MicroLink: about 40 ms), not of the model. tools/bbl_tune.py measures it from a hover log with debug_mode OPTICAL_FLOW. CLI: position_flow_gyro_delay."
     },
     "positionRFlowVel": {
         "message": "R flow velocity"

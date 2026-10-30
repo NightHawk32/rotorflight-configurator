@@ -148,7 +148,7 @@
       min={0}
       max={250}
       step={10}
-      def={50}
+      def={40}
       unit="ms"
       label="positionFlowGyroDelay"
       help="positionFlowGyroDelayHelp"

@@ -880,7 +880,7 @@ export function applyVirtualConfig() {
     baro_downwash_comp: 30,
     est_q_terrain: 200,
     flow_gyro_comp: 100,
-    flow_gyro_delay: 50,
+    flow_gyro_delay: 40,
     rangefinder_hardware: 4,
     optical_flow_hardware: 1,
     optical_flow_align: 0,
