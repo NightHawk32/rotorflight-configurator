@@ -10504,7 +10504,7 @@
         "message": "Horizontal source"
     },
     "positionXySourceHelp": {
-        "message": "AUTO fuses GPS and optical flow. FLOW_ONLY for indoors. CLI: position_xy_source."
+        "message": "AUTO uses optical flow while it works and GPS when it does not (above LIDAR range, poor texture). FLOW_ONLY for indoors. CLI: position_xy_source."
     },
     "positionDownwashComp": {
         "message": "Baro downwash handling"
