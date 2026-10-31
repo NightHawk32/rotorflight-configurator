@@ -10399,7 +10399,7 @@
         "message": "Max speed"
     },
     "positionPosholdMaxSpeedHelp": {
-        "message": "Fastest horizontal speed position hold will command. CLI: poshold_max_horiz_speed."
+        "message": "Fastest horizontal speed position hold will command. Full roll/pitch stick moves at this speed, so it also sets the stick sensitivity. CLI: poshold_max_horiz_speed."
     },
     "positionPosholdMaxTilt": {
         "message": "Max tilt"
