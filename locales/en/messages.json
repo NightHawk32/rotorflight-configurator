@@ -10080,6 +10080,144 @@
     "positionFlowAlignRestart": {
         "message": "Start over"
     },
+    "positionMag": {
+        "message": "Compass calibration"
+    },
+    "positionMagHelp": {
+        "message": "Guides you through the compass calibration. The flight controller records the compass for 30 s while you hold the model in six orientations and turn it around in each, then it saves the offsets. This card follows the same data, shows which orientations are still missing and rates the result. Do it outdoors, at least a few metres from cars, buildings, steel and the laptop, with the model in flight configuration (battery in, but disarmed)."
+    },
+    "positionMagStepPrepare": {
+        "message": "Prepare"
+    },
+    "positionMagStepCalibrate": {
+        "message": "Calibrate"
+    },
+    "positionMagStepResult": {
+        "message": "Result"
+    },
+    "positionMagLive": {
+        "message": "Compass"
+    },
+    "positionMagSensor": {
+        "message": "Compass data"
+    },
+    "positionMagNone": {
+        "message": "No compass"
+    },
+    "positionMagLiveOk": {
+        "message": "Live"
+    },
+    "positionMagStale": {
+        "message": "No new data"
+    },
+    "positionMagVector": {
+        "message": "Field X / Y / Z"
+    },
+    "positionMagField": {
+        "message": "Field strength"
+    },
+    "positionMagHeading": {
+        "message": "Heading"
+    },
+    "positionMagPrepareText": {
+        "message": "Hold the model in your hands, away from metal and electronics. After Start you have 30 s: the card shows the orientation for each 5 s phase. In each phase turn the model slowly around the vertical axis (one full turn), so that every axis points along and against the field once."
+    },
+    "positionMagNoCompass": {
+        "message": "No compass detected. Set mag_hardware (FBUS for the GPS ADV Plus) and reboot."
+    },
+    "positionMagNoData": {
+        "message": "The compass sends no new data. Check its connection (for FBUS: the GPS sensor must be in nav mode)."
+    },
+    "positionMagGyroCalibrating": {
+        "message": "The flight controller is still calibrating its sensors. Put the model down and keep it still for a few seconds."
+    },
+    "positionMagStart": {
+        "message": "Start"
+    },
+    "positionMagPhase": {
+        "message": "Phase {{n}} of {{count}}"
+    },
+    "positionMagPhaseLevel": {
+        "message": "Level, skids down"
+    },
+    "positionMagPhaseNoseDown": {
+        "message": "Nose pointing down"
+    },
+    "positionMagPhaseNoseUp": {
+        "message": "Nose pointing up"
+    },
+    "positionMagPhaseLeftDown": {
+        "message": "Left side down"
+    },
+    "positionMagPhaseRightDown": {
+        "message": "Right side down"
+    },
+    "positionMagPhaseInverted": {
+        "message": "Upside down"
+    },
+    "positionMagTurnText": {
+        "message": "Keep this orientation and turn the model slowly around the vertical axis."
+    },
+    "positionMagTime": {
+        "message": "Calibration time"
+    },
+    "positionMagViewTop": {
+        "message": "Top"
+    },
+    "positionMagViewSide": {
+        "message": "Side"
+    },
+    "positionMagViewFront": {
+        "message": "Front"
+    },
+    "positionMagCancel": {
+        "message": "Cancel"
+    },
+    "positionMagQuality": {
+        "message": "Result"
+    },
+    "positionMagQualityGood": {
+        "message": "Good"
+    },
+    "positionMagQualityFair": {
+        "message": "Usable"
+    },
+    "positionMagQualityPoor": {
+        "message": "Poor"
+    },
+    "positionMagOffsets": {
+        "message": "Saved offsets X / Y / Z"
+    },
+    "positionMagRadius": {
+        "message": "Field strength (fit)"
+    },
+    "positionMagCentreError": {
+        "message": "Offset error"
+    },
+    "positionMagSpread": {
+        "message": "Field roundness"
+    },
+    "positionMagFieldCheck": {
+        "message": "Field now / fit"
+    },
+    "positionMagSaved": {
+        "message": "The flight controller has saved the new offsets."
+    },
+    "positionMagRepeat": {
+        "message": "The flight controller has saved the offsets, but they are not accurate. Repeat the calibration and make sure to cover: {{missing}}."
+    },
+    "positionMagHeadingCheck": {
+        "message": "Check the heading: point the nose to magnetic north (phone compass), the heading should read about 0°; turned 90° to the right, about 90°."
+    },
+    "positionMagRestart": {
+        "message": "Calibrate again"
+    },
+    "positionMagErrorNoStart": {
+        "message": "The flight controller did not start the calibration. Disarm the model and try again."
+    },
+    "positionMagErrorCancelled": {
+        "message": "Cancelled. The flight controller still finishes its 30 s and saves what it recorded, so repeat the calibration."
+    },
     "positionFlowAlignTravel": {
         "message": "Measured motion"
     },

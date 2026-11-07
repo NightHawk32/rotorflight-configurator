@@ -21,6 +21,7 @@
   import LiveControllers from "./LiveControllers.svelte";
   import LiveHorizontal from "./LiveHorizontal.svelte";
   import LiveSensors from "./LiveSensors.svelte";
+  import MagCalibration from "./MagCalibration.svelte";
   import { AH, POS, has } from "./status.js";
 
   const POLL_MS = 100; // 10 Hz: the estimator runs at 100 Hz, sensors at 50 Hz
@@ -219,6 +220,7 @@
       <LiveSensors />
       <FlowAlignment {sampleCount} {activeAlign} />
       <FlowRotation history={flowHistory} />
+      <MagCalibration />
       <LiveControllers />
     </div>
     <div>
