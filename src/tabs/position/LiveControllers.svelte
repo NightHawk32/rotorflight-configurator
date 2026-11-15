@@ -21,20 +21,27 @@
   let al = $derived(st.autolandFlags);
 
   // OFF: green when it could engage, red when the switch was refused;
-  // SETTLE..TOUCHDOWN flying, LANDED/MOTOR_OFF on the ground
+  // SETTLE..TOUCHDOWN flying, LANDED/MOTOR_OFF on the ground (6, 7);
+  // takeoff: GROUND_IDLE waiting (8), RAMP and CLIMB (9, 10)
   let alState = $derived.by(() => {
     if (st.autolandState === 0) {
       if (has(al, AL.REFUSED)) return "bad";
       if (has(al, AL.YIELDED)) return "warn";
       return has(al, AL.AVAILABLE) ? "ok" : undefined;
     }
-    return st.autolandState >= 6 ? "warn" : "ok";
+    if (st.autolandState === 8) {
+      return has(al, AL.TO_ABORTED) ? "bad" : "warn";
+    }
+    return st.autolandState === 6 || st.autolandState === 7 ? "warn" : "ok";
   });
 
   let alStateText = $derived.by(() => {
     if (st.autolandState === 0) {
       if (has(al, AL.REFUSED)) return $i18n.t("positionAutolandRefused");
       if (has(al, AL.YIELDED)) return $i18n.t("positionYieldedToRescue");
+    }
+    if (st.autolandState === 8 && has(al, AL.TO_ABORTED)) {
+      return $i18n.t("positionTakeoffAborted");
     }
     return $i18n.t(AUTOLAND_STATE_KEYS[st.autolandState] ?? "positionUnknown");
   });
@@ -150,6 +157,10 @@
   {#if st.autolandSupported}
     <SubSection label="positionAutoland">
       <Readout label="positionState" value={alStateText} state={alState} />
+      <Readout
+        label="positionTakeoffLanded"
+        value={yesNo(has(al, AL.LANDED))}
+      />
       <Readout
         label="positionAutolandAvailable"
         value={yesNo(has(al, AL.AVAILABLE))}

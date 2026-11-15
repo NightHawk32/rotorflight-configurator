@@ -251,9 +251,13 @@ class FlightController {
       autoland_ground_collective: 0,
       autoland_motor_off_delay:   0,
       autoland_disarm_delay:      0,
+      takeoff_altitude:           0,
+      takeoff_climb_rate:         0,
+      takeoff_ramp_time:          0,
+      takeoff_max_extra:          0,
     };
 
-    // MSP2_HOLD_PROFILE payload version: 2 and up carry the autoland settings
+    // MSP2_HOLD_PROFILE payload version: 2 adds the autoland, 3 the takeoff settings
     this.HOLD_PROFILE_VERSION = 0;
 
     // MSP2_POSITION_STATUS: live estimator / controller snapshot (cm, cm/s)

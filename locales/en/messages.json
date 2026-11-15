@@ -10405,7 +10405,7 @@
         "message": "Live: controllers"
     },
     "positionLiveControllersHelp": {
-        "message": "What altitude hold, position hold, the hard deck and the auto land are doing right now."
+        "message": "What altitude hold, position hold, the hard deck and the auto land/takeoff are doing right now."
     },
     "positionAltSourceUsed": {
         "message": "Altitude source"
@@ -10648,7 +10648,7 @@
         "message": "Push down"
     },
     "positionAutolandGePushHelp": {
-        "message": "How far the collective goes below the learned hover collective in ground effect. CLI: autoland_ge_push."
+        "message": "How far the collective is pushed below the learned hover collective in ground effect; below that it keeps creeping down slowly until touchdown, so the model cannot float on the cushion. CLI: autoland_ge_push."
     },
     "positionAutolandGePushRate": {
         "message": "Push rate"
@@ -10721,6 +10721,54 @@
     },
     "positionAutolandStateMotorOff": {
         "message": "Motor off, disarming"
+    },
+    "positionTakeoff": {
+        "message": "Auto takeoff"
+    },
+    "positionTakeoffNote": {
+        "message": "Arm and spool up with ALTHOLD on: on the ground the collective is capped so the model cannot hop. Push the collective stick above +50 % and back below +25 %: the collective ramps up until liftoff, then the model climbs to the takeoff altitude and holds there. Needs the LIDAR. Stick fully down, ALTHOLD off or losing the spool-up aborts on the ground. With ALTHOLD on, a manual takeoff is not possible."
+    },
+    "positionTakeoffSettings": {
+        "message": "Takeoff"
+    },
+    "positionTakeoffAltitude": {
+        "message": "Takeoff altitude"
+    },
+    "positionTakeoffAltitudeHelp": {
+        "message": "Climb to this height above the takeoff point (fused altitude). CLI: takeoff_altitude."
+    },
+    "positionTakeoffClimbRate": {
+        "message": "Climb rate"
+    },
+    "positionTakeoffClimbRateHelp": {
+        "message": "Climb rate after liftoff; twice that within the ground effect height. CLI: takeoff_climb_rate."
+    },
+    "positionTakeoffRampTime": {
+        "message": "Ramp time"
+    },
+    "positionTakeoffRampTimeHelp": {
+        "message": "Time for the collective to ramp to 10 % below the hover collective; after that it creeps up until liftoff. CLI: takeoff_ramp_time."
+    },
+    "positionTakeoffMaxExtra": {
+        "message": "Abort above hover"
+    },
+    "positionTakeoffMaxExtraHelp": {
+        "message": "Abort the takeoff when the collective reaches the hover collective plus this without a liftoff (hover setting wrong, skid caught). CLI: takeoff_max_extra."
+    },
+    "positionTakeoffLanded": {
+        "message": "Landed (takeoff possible)"
+    },
+    "positionTakeoffAborted": {
+        "message": "Takeoff aborted: push the stick again"
+    },
+    "positionTakeoffStateIdle": {
+        "message": "Takeoff: waiting for the stick push"
+    },
+    "positionTakeoffStateRamp": {
+        "message": "Takeoff: collective ramp"
+    },
+    "positionTakeoffStateClimb": {
+        "message": "Takeoff: climbing"
     },
     "positionSensorsEstimator": {
         "message": "Sensors and estimator"

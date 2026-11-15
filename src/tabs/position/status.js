@@ -46,6 +46,9 @@ export const AL = {
   TD_TILT: 1 << 10,
   FALLING: 1 << 11,
   STICK: 1 << 12,
+  LANDED: 1 << 13,
+  PUSHED: 1 << 14,
+  TO_ABORTED: 1 << 15,
 };
 
 export const AUTOLAND_STATE_KEYS = [
@@ -57,6 +60,9 @@ export const AUTOLAND_STATE_KEYS = [
   "positionAutolandStateTouchdown",
   "positionAutolandStateLanded",
   "positionAutolandStateMotorOff",
+  "positionTakeoffStateIdle",
+  "positionTakeoffStateRamp",
+  "positionTakeoffStateClimb",
 ];
 
 export const FLOW_STATUS_KEYS = [

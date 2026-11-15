@@ -286,11 +286,15 @@ function defaultHoldProfile() {
     autoland_final_rate: 25,
     autoland_slow_height: 150,
     autoland_ge_height: 40,
-    autoland_ge_push: 80,
+    autoland_ge_push: 30,
     autoland_ge_push_rate: 150,
     autoland_ground_collective: -100,
     autoland_motor_off_delay: 20,
     autoland_disarm_delay: 120,
+    takeoff_altitude: 150,
+    takeoff_climb_rate: 50,
+    takeoff_ramp_time: 15,
+    takeoff_max_extra: 150,
   };
 }
 
@@ -939,7 +943,7 @@ export function applyVirtualConfig() {
     autolandState: 0,
     autolandFlags: 0b11010, // available, LIDAR, GPS
   });
-  FC.HOLD_PROFILE_VERSION = 2;
+  FC.HOLD_PROFILE_VERSION = 3;
 
   Object.assign(FC.BATTERY_STATE, {
     cellCount: 10,

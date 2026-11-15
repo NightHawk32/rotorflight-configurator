@@ -701,6 +701,12 @@ MspHelper.prototype.process_data = function(dataHandler) {
                     hp.autoland_motor_off_delay = data.readU16();
                     hp.autoland_disarm_delay = data.readU16();
                 }
+                if (version >= 3) {
+                    hp.takeoff_altitude = data.readU16();
+                    hp.takeoff_climb_rate = data.readU16();
+                    hp.takeoff_ramp_time = data.readU16();
+                    hp.takeoff_max_extra = data.readU16();
+                }
                 break;
             }
 
@@ -2493,8 +2499,8 @@ MspHelper.prototype.crunch = function(code) {
 
         case MSPCodes.MSP2_SET_HOLD_PROFILE: {
             const hp = FC.HOLD_PROFILE;
-            // Send what the firmware sent: version 1 firmware rejects version 2
-            const version = FC.HOLD_PROFILE_VERSION >= 2 ? 2 : 1;
+            // Send what the firmware sent: older firmware rejects newer versions
+            const version = Math.min(Math.max(FC.HOLD_PROFILE_VERSION, 1), 3);
             buffer.push8(version) // payload version
                   .push16(hp.althold_alt_p_gain)
                   .push16(hp.althold_alt_i_gain)
@@ -2527,6 +2533,12 @@ MspHelper.prototype.crunch = function(code) {
                       .push16(hp.autoland_ground_collective & 0xFFFF)
                       .push16(hp.autoland_motor_off_delay)
                       .push16(hp.autoland_disarm_delay);
+            }
+            if (version >= 3) {
+                buffer.push16(hp.takeoff_altitude)
+                      .push16(hp.takeoff_climb_rate)
+                      .push16(hp.takeoff_ramp_time)
+                      .push16(hp.takeoff_max_extra);
             }
             break;
         }

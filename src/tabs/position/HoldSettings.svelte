@@ -13,6 +13,7 @@
   let hp = $derived(FC.HOLD_PROFILE);
   let profile = $derived((FC.CONFIG.profile ?? 0) + 1);
   let autolandSupported = $derived(FC.HOLD_PROFILE_VERSION >= 2);
+  let takeoffSupported = $derived(FC.HOLD_PROFILE_VERSION >= 3);
 </script>
 
 {#snippet profileNote()}
@@ -363,7 +364,7 @@
         min={0}
         max={30}
         step={0.1}
-        def={8}
+        def={3}
         unit="%"
         label="positionAutolandGePush"
         help="positionAutolandGePushHelp"
@@ -419,6 +420,67 @@
         unit="s"
         label="positionAutolandDisarmDelay"
         help="positionAutolandDisarmDelayHelp"
+      />
+    </SubSection>
+  </Section>
+{/if}
+
+{#if takeoffSupported}
+  <Section label="positionTakeoff">
+    {@render profileNote()}
+    <p class="note">{$i18n.t("positionTakeoffNote")}</p>
+    <SubSection label="positionTakeoffSettings">
+      <ScaledField
+        id="takeoff-altitude"
+        obj={hp}
+        key="takeoff_altitude"
+        scale={100}
+        min={0.3}
+        max={10}
+        step={0.05}
+        def={1.5}
+        unit="m"
+        label="positionTakeoffAltitude"
+        help="positionTakeoffAltitudeHelp"
+      />
+      <ScaledField
+        id="takeoff-climb-rate"
+        obj={hp}
+        key="takeoff_climb_rate"
+        scale={100}
+        min={0.1}
+        max={2}
+        step={0.05}
+        def={0.5}
+        unit="m/s"
+        label="positionTakeoffClimbRate"
+        help="positionTakeoffClimbRateHelp"
+      />
+      <ScaledField
+        id="takeoff-ramp-time"
+        obj={hp}
+        key="takeoff_ramp_time"
+        scale={10}
+        min={0}
+        max={10}
+        step={0.1}
+        def={1.5}
+        unit="s"
+        label="positionTakeoffRampTime"
+        help="positionTakeoffRampTimeHelp"
+      />
+      <ScaledField
+        id="takeoff-max-extra"
+        obj={hp}
+        key="takeoff_max_extra"
+        scale={10}
+        min={0}
+        max={50}
+        step={0.1}
+        def={15}
+        unit="%"
+        label="positionTakeoffMaxExtra"
+        help="positionTakeoffMaxExtraHelp"
       />
     </SubSection>
   </Section>
