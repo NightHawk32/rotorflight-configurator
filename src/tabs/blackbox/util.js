@@ -146,6 +146,7 @@ export function getDebugModes(apiVersion, positionSupported = false) {
           "POS_EST_Z",
           "POS_EST_XY",
           "POS_EST_TERRAIN",
+          "AUTOLAND",
         ]
       : ["USER1", "USER2", "USER3", "USER4"]),
   ];

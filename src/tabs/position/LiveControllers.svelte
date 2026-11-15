@@ -6,10 +6,38 @@
   import { i18n } from "@/js/i18n.js";
 
   import Readout from "./Readout.svelte";
-  import { AH, HARDDECK_STATE_KEYS, has, meters } from "./status.js";
+  import {
+    AH,
+    AL,
+    AUTOLAND_STATE_KEYS,
+    HARDDECK_STATE_KEYS,
+    has,
+    meters,
+  } from "./status.js";
 
   let st = $derived(FC.POSITION_STATUS);
   let ah = $derived(st.altholdFlags);
+
+  let al = $derived(st.autolandFlags);
+
+  // OFF: green when it could engage, red when the switch was refused;
+  // SETTLE..TOUCHDOWN flying, LANDED/MOTOR_OFF on the ground
+  let alState = $derived.by(() => {
+    if (st.autolandState === 0) {
+      if (has(al, AL.REFUSED)) return "bad";
+      if (has(al, AL.YIELDED)) return "warn";
+      return has(al, AL.AVAILABLE) ? "ok" : undefined;
+    }
+    return st.autolandState >= 6 ? "warn" : "ok";
+  });
+
+  let alStateText = $derived.by(() => {
+    if (st.autolandState === 0) {
+      if (has(al, AL.REFUSED)) return $i18n.t("positionAutolandRefused");
+      if (has(al, AL.YIELDED)) return $i18n.t("positionYieldedToRescue");
+    }
+    return $i18n.t(AUTOLAND_STATE_KEYS[st.autolandState] ?? "positionUnknown");
+  });
 
   let altholdState = $derived.by(() => {
     if (has(ah, AH.ENGAGED)) {
@@ -118,4 +146,48 @@
     />
     <Readout label="positionTarget" value={meters(st.harddeckTarget)} />
   </SubSection>
+
+  {#if st.autolandSupported}
+    <SubSection label="positionAutoland">
+      <Readout label="positionState" value={alStateText} state={alState} />
+      <Readout
+        label="positionAutolandAvailable"
+        value={yesNo(has(al, AL.AVAILABLE))}
+        state={has(al, AL.AVAILABLE) ? "ok" : undefined}
+      />
+      <Readout
+        label="positionAutolandLidar"
+        value={yesNo(has(al, AL.LIDAR))}
+        state={has(al, AL.LIDAR) ? undefined : "bad"}
+      />
+      <Readout
+        label="positionAutolandGps"
+        value={yesNo(has(al, AL.GPS))}
+        state={has(al, AL.GPS) ? undefined : "bad"}
+      />
+      <Readout
+        label="positionAutolandTime"
+        value={st.autolandState === 0
+          ? "—"
+          : `${(st.autolandTime / 1000).toFixed(1)} s`}
+      />
+      <Readout
+        label="positionAutolandRate"
+        value={`${(st.autolandRate / 100).toFixed(2)} m/s`}
+      />
+      <Readout
+        label="positionAutolandHover"
+        value={`${(st.autolandHover / 10).toFixed(1)}%`}
+      />
+      <Readout
+        label="positionCollectiveOutput"
+        value={`${(st.autolandCollective / 10).toFixed(1)}%`}
+      />
+      <Readout
+        label="positionAutolandMotorCut"
+        value={yesNo(has(al, AL.MOTOR_CUT))}
+        state={has(al, AL.MOTOR_CUT) ? "warn" : undefined}
+      />
+    </SubSection>
+  {/if}
 </Section>

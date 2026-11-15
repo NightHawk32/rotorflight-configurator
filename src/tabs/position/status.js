@@ -1,6 +1,7 @@
 // Mirrors the firmware: POS_STATUS_* (flight/position.h), AH_STATUS_*
-// (flight/althold.h), FLOW_STATUS_* (flight/position.c) and
-// hardDeckState_e (flight/harddeck.h).
+// (flight/althold.h), FLOW_STATUS_* (flight/position.c),
+// hardDeckState_e (flight/harddeck.h), autolandState_e and AL_STATUS_*
+// (flight/autoland.h).
 
 export const POS = {
   ALT_VALID: 1 << 0,
@@ -27,7 +28,36 @@ export const AH = {
   SOURCE_VALID: 1 << 2,
   STICK: 1 << 3,
   YIELDED: 1 << 4,
+  EXIT_BLEND: 1 << 5,
+  AUTOLAND: 1 << 6,
 };
+
+export const AL = {
+  SWITCH: 1 << 0,
+  AVAILABLE: 1 << 1,
+  REFUSED: 1 << 2,
+  LIDAR: 1 << 3,
+  GPS: 1 << 4,
+  AGL_VALID: 1 << 5,
+  MOTOR_CUT: 1 << 6,
+  YIELDED: 1 << 7,
+  TD_VARIO: 1 << 8,
+  TD_COLL: 1 << 9,
+  TD_TILT: 1 << 10,
+  FALLING: 1 << 11,
+  STICK: 1 << 12,
+};
+
+export const AUTOLAND_STATE_KEYS = [
+  "positionAutolandStateOff",
+  "positionAutolandStateSettle",
+  "positionAutolandStateDescend",
+  "positionAutolandStateFinal",
+  "positionAutolandStateGroundEffect",
+  "positionAutolandStateTouchdown",
+  "positionAutolandStateLanded",
+  "positionAutolandStateMotorOff",
+];
 
 export const FLOW_STATUS_KEYS = [
   "positionFlowStatusFused",

@@ -10405,7 +10405,7 @@
         "message": "Live: controllers"
     },
     "positionLiveControllersHelp": {
-        "message": "What altitude hold, position hold and the hard deck are doing right now."
+        "message": "What altitude hold, position hold, the hard deck and the auto land are doing right now."
     },
     "positionAltSourceUsed": {
         "message": "Altitude source"
@@ -10601,6 +10601,126 @@
     },
     "positionHardDeckUseAglHelp": {
         "message": "Also trigger on the LIDAR height above ground, e.g. over a hill. CLI: harddeck_use_agl."
+    },
+    "positionAutoland": {
+        "message": "Auto land"
+    },
+    "positionAutolandNote": {
+        "message": "One switch (mode AUTOLAND) engages altitude and position hold and lands: hover to settle, descend, push down in ground effect, negative pitch on the ground, motor off, disarm. Needs the LIDAR and a GPS fix with a known heading. Switching off in the air hands back to altitude hold (or the stick); after touchdown the switch is ignored."
+    },
+    "positionAutolandDescent": {
+        "message": "Descent"
+    },
+    "positionAutolandGround": {
+        "message": "Ground effect and ground"
+    },
+    "positionAutolandSettle": {
+        "message": "Settle time"
+    },
+    "positionAutolandSettleHelp": {
+        "message": "Hover before the descent starts; it also waits until the model is calm. The hover collective is learned here. CLI: autoland_settle_time."
+    },
+    "positionAutolandDescentRate": {
+        "message": "Descent rate"
+    },
+    "positionAutolandDescentRateHelp": {
+        "message": "Descent while the LIDAR sees the ground above the slow height (or the model is more than 8 m above the arm point without a LIDAR reading). CLI: autoland_descent_rate."
+    },
+    "positionAutolandSlowHeight": {
+        "message": "Slow height"
+    },
+    "positionAutolandSlowHeightHelp": {
+        "message": "Height above ground (LIDAR) where the descent slows to the final rate. CLI: autoland_slow_height."
+    },
+    "positionAutolandFinalRate": {
+        "message": "Final rate"
+    },
+    "positionAutolandFinalRateHelp": {
+        "message": "Descent near the ground, and whenever the LIDAR has no reading close to the ground. CLI: autoland_final_rate."
+    },
+    "positionAutolandGeHeight": {
+        "message": "Ground effect height"
+    },
+    "positionAutolandGeHeightHelp": {
+        "message": "Below this height above ground the altitude loop stops and the collective is pushed down (the baro is wrong and the model floats in ground effect). 0 = off. CLI: autoland_ge_height."
+    },
+    "positionAutolandGePush": {
+        "message": "Push down"
+    },
+    "positionAutolandGePushHelp": {
+        "message": "How far the collective goes below the learned hover collective in ground effect. CLI: autoland_ge_push."
+    },
+    "positionAutolandGePushRate": {
+        "message": "Push rate"
+    },
+    "positionAutolandGePushRateHelp": {
+        "message": "How fast the collective is pushed down. CLI: autoland_ge_push_rate."
+    },
+    "positionAutolandGroundCollective": {
+        "message": "Ground collective"
+    },
+    "positionAutolandGroundCollectiveHelp": {
+        "message": "Collective held on the ground, slightly negative to keep the model down. CLI: autoland_ground_collective."
+    },
+    "positionAutolandMotorOffDelay": {
+        "message": "Motor off after"
+    },
+    "positionAutolandMotorOffDelayHelp": {
+        "message": "Time on the ground with the motor running before the throttle is cut. Once cut, the motor stays off until the disarm. CLI: autoland_motor_off_delay."
+    },
+    "positionAutolandDisarmDelay": {
+        "message": "Disarm after"
+    },
+    "positionAutolandDisarmDelayHelp": {
+        "message": "Time from the motor cut to the disarm; negative pitch is held while the rotor runs down. Lower the collective stick before it ends. Re-arming needs the arm switch toggled. CLI: autoland_disarm_delay."
+    },
+    "positionAutolandAvailable": {
+        "message": "Available"
+    },
+    "positionAutolandLidar": {
+        "message": "LIDAR"
+    },
+    "positionAutolandGps": {
+        "message": "GPS and heading"
+    },
+    "positionAutolandTime": {
+        "message": "Time in state"
+    },
+    "positionAutolandRate": {
+        "message": "Commanded rate"
+    },
+    "positionAutolandHover": {
+        "message": "Learned hover"
+    },
+    "positionAutolandMotorCut": {
+        "message": "Motor cut"
+    },
+    "positionAutolandRefused": {
+        "message": "Refused: not available (switch off and on again)"
+    },
+    "positionAutolandStateOff": {
+        "message": "Off"
+    },
+    "positionAutolandStateSettle": {
+        "message": "Settling"
+    },
+    "positionAutolandStateDescend": {
+        "message": "Descending"
+    },
+    "positionAutolandStateFinal": {
+        "message": "Final descent"
+    },
+    "positionAutolandStateGroundEffect": {
+        "message": "Ground effect: pushing down"
+    },
+    "positionAutolandStateTouchdown": {
+        "message": "Touchdown"
+    },
+    "positionAutolandStateLanded": {
+        "message": "Landed"
+    },
+    "positionAutolandStateMotorOff": {
+        "message": "Motor off, disarming"
     },
     "positionSensorsEstimator": {
         "message": "Sensors and estimator"

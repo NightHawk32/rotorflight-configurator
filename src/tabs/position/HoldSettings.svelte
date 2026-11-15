@@ -12,6 +12,7 @@
 
   let hp = $derived(FC.HOLD_PROFILE);
   let profile = $derived((FC.CONFIG.profile ?? 0) + 1);
+  let autolandSupported = $derived(FC.HOLD_PROFILE_VERSION >= 2);
 </script>
 
 {#snippet profileNote()}
@@ -282,10 +283,156 @@
   </SubSection>
 </Section>
 
+{#if autolandSupported}
+  <Section label="positionAutoland">
+    {@render profileNote()}
+    <p class="note">{$i18n.t("positionAutolandNote")}</p>
+    <SubSection label="positionAutolandDescent">
+      <ScaledField
+        id="autoland-settle"
+        obj={hp}
+        key="autoland_settle_time"
+        scale={10}
+        min={0}
+        max={30}
+        step={0.1}
+        def={5}
+        unit="s"
+        label="positionAutolandSettle"
+        help="positionAutolandSettleHelp"
+      />
+      <ScaledField
+        id="autoland-descent-rate"
+        obj={hp}
+        key="autoland_descent_rate"
+        scale={100}
+        min={0.1}
+        max={3}
+        step={0.05}
+        def={0.8}
+        unit="m/s"
+        label="positionAutolandDescentRate"
+        help="positionAutolandDescentRateHelp"
+      />
+      <ScaledField
+        id="autoland-slow-height"
+        obj={hp}
+        key="autoland_slow_height"
+        scale={100}
+        min={0.2}
+        max={10}
+        step={0.05}
+        def={1.5}
+        unit="m"
+        label="positionAutolandSlowHeight"
+        help="positionAutolandSlowHeightHelp"
+      />
+      <ScaledField
+        id="autoland-final-rate"
+        obj={hp}
+        key="autoland_final_rate"
+        scale={100}
+        min={0.05}
+        max={1}
+        step={0.05}
+        def={0.25}
+        unit="m/s"
+        label="positionAutolandFinalRate"
+        help="positionAutolandFinalRateHelp"
+      />
+    </SubSection>
+    <SubSection label="positionAutolandGround">
+      <ScaledField
+        id="autoland-ge-height"
+        obj={hp}
+        key="autoland_ge_height"
+        scale={100}
+        min={0}
+        max={2}
+        step={0.01}
+        def={0.4}
+        unit="m"
+        label="positionAutolandGeHeight"
+        help="positionAutolandGeHeightHelp"
+      />
+      <ScaledField
+        id="autoland-ge-push"
+        obj={hp}
+        key="autoland_ge_push"
+        scale={10}
+        min={0}
+        max={30}
+        step={0.1}
+        def={8}
+        unit="%"
+        label="positionAutolandGePush"
+        help="positionAutolandGePushHelp"
+      />
+      <ScaledField
+        id="autoland-ge-push-rate"
+        obj={hp}
+        key="autoland_ge_push_rate"
+        scale={10}
+        min={1}
+        max={100}
+        step={0.1}
+        def={15}
+        unit="%/s"
+        label="positionAutolandGePushRate"
+        help="positionAutolandGePushRateHelp"
+      />
+      <ScaledField
+        id="autoland-ground-collective"
+        obj={hp}
+        key="autoland_ground_collective"
+        scale={10}
+        min={-50}
+        max={0}
+        step={0.1}
+        def={-10}
+        unit="%"
+        label="positionAutolandGroundCollective"
+        help="positionAutolandGroundCollectiveHelp"
+      />
+      <ScaledField
+        id="autoland-motor-off"
+        obj={hp}
+        key="autoland_motor_off_delay"
+        scale={10}
+        min={0}
+        max={10}
+        step={0.1}
+        def={2}
+        unit="s"
+        label="positionAutolandMotorOffDelay"
+        help="positionAutolandMotorOffDelayHelp"
+      />
+      <ScaledField
+        id="autoland-disarm"
+        obj={hp}
+        key="autoland_disarm_delay"
+        scale={10}
+        min={0}
+        max={60}
+        step={0.1}
+        def={12}
+        unit="s"
+        label="positionAutolandDisarmDelay"
+        help="positionAutolandDisarmDelayHelp"
+      />
+    </SubSection>
+  </Section>
+{/if}
+
 <style lang="scss">
   .profile {
     margin: 0 0 4px;
     font-size: 0.75rem;
     color: var(--color-text-soft);
+  }
+
+  .note {
+    margin: 0 0 8px;
+    font-size: 0.75rem;
   }
 </style>

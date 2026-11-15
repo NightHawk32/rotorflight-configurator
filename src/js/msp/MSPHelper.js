@@ -662,10 +662,12 @@ MspHelper.prototype.process_data = function(dataHandler) {
             }
 
             case MSPCodes.MSP2_HOLD_PROFILE: {
-                if (data.readU8() !== 1) {
+                const version = data.readU8();
+                if (version < 1) {
                     console.log('Unknown hold profile payload version');
                     break;
                 }
+                FC.HOLD_PROFILE_VERSION = version;
                 const hp = FC.HOLD_PROFILE;
                 hp.althold_alt_p_gain = data.readU16();
                 hp.althold_alt_i_gain = data.readU16();
@@ -687,6 +689,18 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 hp.harddeck_reaction_time = data.readU16();
                 hp.harddeck_sigma_factor = data.readU8();
                 hp.harddeck_use_agl = data.readU8();
+                if (version >= 2) {
+                    hp.autoland_settle_time = data.readU16();
+                    hp.autoland_descent_rate = data.readU16();
+                    hp.autoland_final_rate = data.readU16();
+                    hp.autoland_slow_height = data.readU16();
+                    hp.autoland_ge_height = data.readU16();
+                    hp.autoland_ge_push = data.readU16();
+                    hp.autoland_ge_push_rate = data.readU16();
+                    hp.autoland_ground_collective = data.read16();
+                    hp.autoland_motor_off_delay = data.readU16();
+                    hp.autoland_disarm_delay = data.readU16();
+                }
                 break;
             }
 
@@ -745,6 +759,15 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 if (version >= 4) {
                     st.flowCompX = data.read16();
                     st.flowCompY = data.read16();
+                }
+                st.autolandSupported = version >= 5;
+                if (version >= 5) {
+                    st.autolandState = data.readU8();
+                    st.autolandFlags = data.readU16();
+                    st.autolandTime = data.readU32();
+                    st.autolandHover = data.read16();
+                    st.autolandCollective = data.read16();
+                    st.autolandRate = data.read16();
                 }
                 break;
             }
@@ -2470,7 +2493,9 @@ MspHelper.prototype.crunch = function(code) {
 
         case MSPCodes.MSP2_SET_HOLD_PROFILE: {
             const hp = FC.HOLD_PROFILE;
-            buffer.push8(1) // payload version
+            // Send what the firmware sent: version 1 firmware rejects version 2
+            const version = FC.HOLD_PROFILE_VERSION >= 2 ? 2 : 1;
+            buffer.push8(version) // payload version
                   .push16(hp.althold_alt_p_gain)
                   .push16(hp.althold_alt_i_gain)
                   .push16(hp.althold_alt_d_gain)
@@ -2491,6 +2516,18 @@ MspHelper.prototype.crunch = function(code) {
                   .push16(hp.harddeck_reaction_time)
                   .push8(hp.harddeck_sigma_factor)
                   .push8(hp.harddeck_use_agl);
+            if (version >= 2) {
+                buffer.push16(hp.autoland_settle_time)
+                      .push16(hp.autoland_descent_rate)
+                      .push16(hp.autoland_final_rate)
+                      .push16(hp.autoland_slow_height)
+                      .push16(hp.autoland_ge_height)
+                      .push16(hp.autoland_ge_push)
+                      .push16(hp.autoland_ge_push_rate)
+                      .push16(hp.autoland_ground_collective & 0xFFFF)
+                      .push16(hp.autoland_motor_off_delay)
+                      .push16(hp.autoland_disarm_delay);
+            }
             break;
         }
 

@@ -259,7 +259,7 @@ function defaultGovernorProfile() {
 }
 
 function defaultHoldProfile() {
-  // src/main/pg/pid.c: resetPidProfile(), althold.* / poshold.* / harddeck.*
+  // src/main/pg/pid.c: resetPidProfile(), althold.* / poshold.* / harddeck.* / autoland.*
   return {
     althold_alt_p_gain: 20,
     althold_alt_i_gain: 5,
@@ -281,6 +281,16 @@ function defaultHoldProfile() {
     harddeck_reaction_time: 300,
     harddeck_sigma_factor: 20,
     harddeck_use_agl: 1,
+    autoland_settle_time: 50,
+    autoland_descent_rate: 80,
+    autoland_final_rate: 25,
+    autoland_slow_height: 150,
+    autoland_ge_height: 40,
+    autoland_ge_push: 80,
+    autoland_ge_push_rate: 150,
+    autoland_ground_collective: -100,
+    autoland_motor_off_delay: 20,
+    autoland_disarm_delay: 120,
   };
 }
 
@@ -925,7 +935,11 @@ export function applyVirtualConfig() {
     harddeckState: 0,
     harddeckPredicted: 0,
     harddeckTarget: 0,
+    autolandSupported: true,
+    autolandState: 0,
+    autolandFlags: 0b11010, // available, LIDAR, GPS
   });
+  FC.HOLD_PROFILE_VERSION = 2;
 
   Object.assign(FC.BATTERY_STATE, {
     cellCount: 10,

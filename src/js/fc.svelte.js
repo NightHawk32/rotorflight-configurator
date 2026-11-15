@@ -36,6 +36,7 @@ class FlightController {
   GPS_DATA = $state();
   GPS_RESCUE = $state();
   HOLD_PROFILE = $state();
+  HOLD_PROFILE_VERSION = $state();
   LED_COLORS = $state();
   LED_MODE_COLORS = $state();
   LED_STRIP = $state();
@@ -240,7 +241,20 @@ class FlightController {
       harddeck_reaction_time:     0,
       harddeck_sigma_factor:      0,
       harddeck_use_agl:           0,
+      autoland_settle_time:       0,
+      autoland_descent_rate:      0,
+      autoland_final_rate:        0,
+      autoland_slow_height:       0,
+      autoland_ge_height:         0,
+      autoland_ge_push:           0,
+      autoland_ge_push_rate:      0,
+      autoland_ground_collective: 0,
+      autoland_motor_off_delay:   0,
+      autoland_disarm_delay:      0,
     };
+
+    // MSP2_HOLD_PROFILE payload version: 2 and up carry the autoland settings
+    this.HOLD_PROFILE_VERSION = 0;
 
     // MSP2_POSITION_STATUS: live estimator / controller snapshot (cm, cm/s)
     this.POSITION_STATUS = {
@@ -287,6 +301,13 @@ class FlightController {
       gyroPitch:                  0,
       flowCompX:                  0,
       flowCompY:                  0,
+      autolandSupported:          false,
+      autolandState:              0,
+      autolandFlags:              0,
+      autolandTime:               0,
+      autolandHover:              0,
+      autolandCollective:         0,
+      autolandRate:               0,
     };
 
     this.ANALOG = {
